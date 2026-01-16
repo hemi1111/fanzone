@@ -1,0 +1,19 @@
+{
+  "name": "fanzone",
+  "private": true,
+  "workspaces": [
+    "app",
+    "server"
+  ],
+  "scripts": {
+    "app": "npm --workspace app run dev",
+    "server": "npm --workspace server run start:dev",
+    "dev": "concurrently \"npm:app\" \"npm:server\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
