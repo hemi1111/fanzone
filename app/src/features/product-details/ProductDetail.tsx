@@ -652,11 +652,13 @@ const ProductDetail = () => {
                 product.attributes.colors ||
                 product.attributes.dimensions);
 
-            // Success cases - product was added to cart
+            // Success cases - product was added to cart (no selectable attributes, or poster/attributes with selection made)
             if (
               !product.attributes ||
+              Object.keys(product.attributes).length === 0 ||
               (isPoster && posterSelections) ||
-              (hasAttributes && !isPoster && selectedAttribute)
+              (hasAttributes && !isPoster && selectedAttribute) ||
+              (!hasAttributes && !isPoster)
             ) {
               return (
                 <Link

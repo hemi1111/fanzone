@@ -15,28 +15,31 @@ const Showcase = () => {
       title: "Formula 1",
       link: "f1",
       background:
-        "https://vgtfcayksprxvzdcikrx.supabase.co/storage/v1/object/public/f1-images/Advertising/f1_category.jpg",
+        "https://vgtfcayksprxvzdcikrx.supabase.co/storage/v1/object/public/f1-images/Showcase/f1_category.jpg",
     },
     {
       title: "Futboll",
       link: "football",
       background:
-        "https://vgtfcayksprxvzdcikrx.supabase.co/storage/v1/object/public/f1-images/Advertising/football_category.jpg",
+        "https://vgtfcayksprxvzdcikrx.supabase.co/storage/v1/object/public/f1-images/Showcase/football_category.jpg",
     },
     {
       title: "Basketboll",
       link: "basketball",
-      background: "#333333",
+      background:
+        "https://vgtfcayksprxvzdcikrx.supabase.co/storage/v1/object/public/f1-images/Showcase/basketball_category.jpg",
     },
     {
       title: "Makina",
       link: "cars",
-      background: "#333333",
+      background:
+        "https://vgtfcayksprxvzdcikrx.supabase.co/storage/v1/object/public/f1-images/Showcase/cars_category.jpg",
     },
     {
       title: "Filma",
       link: "movies",
-      background: "#333333",
+      background:
+        "https://vgtfcayksprxvzdcikrx.supabase.co/storage/v1/object/public/f1-images/Showcase/movies_category.jpg",
     },
   ];
   const [currentIndex, setCurrentIndex] = useState(0);

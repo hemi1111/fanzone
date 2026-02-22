@@ -10,7 +10,9 @@ import FormGroup from "@mui/material/FormGroup";
 import Box from "@mui/material/Box";
 
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { PRODUCT_TYPE_LABELS } from "../types/CategoryConfig";
+
+const formatTypeLabel = (type: string) =>
+  type.charAt(0).toUpperCase() + type.slice(1);
 
 interface ProductTypeFilterProps {
   availableTypes: string[];
@@ -63,7 +65,7 @@ const ProductTypeFilter: React.FC<ProductTypeFilterProps> = ({
                 }
                 label={
                   <Typography sx={{ fontSize: "0.9rem", color: "#555" }}>
-                    {PRODUCT_TYPE_LABELS[type] || type}
+                    {formatTypeLabel(type)}
                   </Typography>
                 }
               />

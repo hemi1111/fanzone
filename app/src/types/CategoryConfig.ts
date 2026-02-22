@@ -33,21 +33,22 @@ export const CATEGORY_CONFIGS: Record<string, CategoryConfig> = {
   F1: {
     name: "Formula 1",
     route: "/f1",
-    availableProductTypes: ["poster", "accessory", "clothing"],
+    availableProductTypes: ["poster", "aksesore", "kapele"],
     availableFilters: ["price", "product_type", "sorting"],
     showcaseTitle: "Formula 1",
   },
   Futboll: {
     name: "Futboll",
     route: "/football",
-    availableProductTypes: ["poster", "accessory", "clothing"],
-    availableFilters: ["price", "product_type", "sorting"],
+    availableProductTypes: ["poster"],
+    availableFilters: ["price", "sorting"],
     showcaseTitle: "Futboll",
   },
 };
 
+// product_type is stored in Albanian in DB; display with capitalize when no label
 export const PRODUCT_TYPE_LABELS: Record<string, string> = {
   poster: "Poster",
-  accessory: "Aksesore",
-  clothing: "Veshje",
+  aksesore: "Aksesore",
+  kapele: "Kapele",
 };
