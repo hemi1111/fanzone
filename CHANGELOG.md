@@ -7,9 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.1.0] - 2026-02-23
+
+### Added
+
+- Mail module integration for server notifications.
+
+### Changed
+
+- Server app module: global config, TypeORM SSL and sync settings, MailModule wired in.
+
+---
+
 ## [1.0.0] - 2025-09-10
 
--### Added
+### Added
 
 - Initial release of **FanZone**, a fully functional storefront for framed sport designs.
 - Home page with featured products and promotional banners.

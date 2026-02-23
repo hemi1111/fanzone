@@ -1,6 +1,6 @@
 {
   "name": "fanzone-server",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "The server for the Fan Zone application.",
   "private": true,
   "license": "UNLICENSED",
