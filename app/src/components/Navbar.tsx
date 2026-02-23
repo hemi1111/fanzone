@@ -4,7 +4,6 @@ import { Link as RouterLink, useLocation } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import Badge from "@mui/material/Badge";
@@ -19,6 +18,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import SearchIcon from "@mui/icons-material/Search";
 
+import Logo from "./Logo";
 import MobileDrawer from "./MobileDrawer";
 import SearchProducts from "./SearchProducts";
 
@@ -119,24 +119,14 @@ const Navbar = () => {
       }}
     >
       <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <Typography
-            variant="h6"
-            noWrap
-            component={RouterLink}
-            to="/"
+        <Toolbar disableGutters sx={{ position: "relative" }}>
+          <Logo
+            variant="dark"
             sx={{
               width: "fit-content",
               display: { xs: "none", md: "flex" },
-              fontWeight: 700,
-              letterSpacing: ".2rem",
-              color: "white",
-              textDecoration: "none",
-              alignItems: "center",
             }}
-          >
-            Fan Zone
-          </Typography>
+          />
 
           <Box
             sx={{
@@ -164,23 +154,16 @@ const Navbar = () => {
             />
           </Box>
 
-          <Typography
-            variant="h6"
-            noWrap
-            component={RouterLink}
-            to="/"
+          <Logo
+            variant="dark"
             sx={{
-              ml: 2,
               display: { xs: "flex", md: "none" },
-              flexGrow: 1,
-              fontWeight: 700,
-              letterSpacing: ".2rem",
-              color: "white",
-              textDecoration: "none",
+              position: { xs: "absolute", md: "static" },
+              left: { xs: "50%", md: "auto" },
+              transform: { xs: "translateX(-50%)", md: "none" },
+              justifyContent: "center",
             }}
-          >
-            Fan Zone
-          </Typography>
+          />
 
           {/* Desktop menu (centered) */}
           <Box

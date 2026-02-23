@@ -22,6 +22,7 @@ import { faTiktok } from "@fortawesome/free-brands-svg-icons";
 import CategoryIcon from "@mui/icons-material/Category";
 
 import { Link as RouterLink, useNavigate, useLocation } from "react-router-dom";
+import Logo from "./Logo";
 
 interface MobileDrawerProps {
   drawerOpen: boolean;
@@ -67,16 +68,11 @@ const MobileDrawer = ({
             zIndex: 2,
           }}
         >
-          <Typography
-            variant="h6"
-            sx={{
-              fontWeight: 700,
-              color: "#000000",
-              letterSpacing: "1px",
-            }}
-          >
-            Fan Zone
-          </Typography>
+          <Logo
+            variant="light"
+            onClick={() => toggleDrawer(false)}
+            sx={{ color: "#000000" }}
+          />
           <IconButton
             onClick={() => toggleDrawer(false)}
             sx={{
