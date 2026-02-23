@@ -34,7 +34,7 @@ const CheckoutPage = () => {
 
   const [openModal, setOpenModal] = useState(false);
 
-  const { mutate, isPending, isSuccess, isError } = useCreateOrder();
+  const { mutate, isPending } = useCreateOrder();
 
   const {
     control,
@@ -94,30 +94,16 @@ const CheckoutPage = () => {
 
   const total = totalPrice > 1500 ? totalPrice : totalPrice + 200;
 
-  const Modal = () => {
-    if (isSuccess) {
-      return (
-        <ConfirmationModal
-          open={openModal}
-          severity="success"
-          onClose={() => {
-            setOpenModal(false), navigate("/", { replace: true });
-          }}
-        />
-      );
-    }
-    if (isError) {
-      return (
-        <ConfirmationModal
-          open={openModal}
-          severity="error"
-          onClose={() => {
-            setOpenModal(false), navigate("/", { replace: true });
-          }}
-        />
-      );
-    }
-  };
+  const Modal = () => (
+    <ConfirmationModal
+      open={openModal}
+      severity="success"
+      onClose={() => {
+        setOpenModal(false);
+        navigate("/", { replace: true });
+      }}
+    />
+  );
   const hasErrors = useMemo(() => Object.keys(errors).length > 0, [errors]);
 
   return (
