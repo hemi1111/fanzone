@@ -27,21 +27,34 @@ export class OrdersController {
   async create(@Body() createOrderDto: CreateOrderDto) {
     try {
       const order = await this.ordersService.create(createOrderDto);
-      // ✅ Send confirmation email to client
-      await this.mailService.sendMail(
-        order.user_email,
-        `Konfirmim Porosie - #${order.id}`,
-        '', // plain text version (optional)
-        generateOrderHtml(order),
-      );
+      const orderHtml = generateOrderHtml(order);
+      const subject = `Konfirmim Porosie - #${order.id}`;
 
-      // ✅ Send notification email to yourself
-      await this.mailService.sendMail(
-        process.env.EMAIL_USER!,
-        `Porosi e re - #${order.id}`,
-        '',
-        generateOrderHtml(order),
-      );
+      try {
+        await this.mailService.sendMail(
+          order.user_email,
+          subject,
+          '',
+          orderHtml,
+        );
+      } catch (customerEmailErr) {
+        console.warn(
+          `Could not send order confirmation to ${order.user_email} (order #${order.id}):`,
+          customerEmailErr,
+        );
+      }
+
+      // Always send notification to site owner
+      const ownerEmail =
+        process.env.CONTACT_EMAIL || process.env.EMAIL_USER || process.env.EMAIL_FROM;
+      if (ownerEmail) {
+        await this.mailService.sendMail(
+          ownerEmail,
+          `Porosi e re - #${order.id}`,
+          '',
+          orderHtml,
+        );
+      }
 
       return {
         message: 'Order created successfully and emails sent.',

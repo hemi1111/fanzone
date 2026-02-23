@@ -20,7 +20,6 @@ What we sell:
 
 - Frontend: React, TypeScript, Vite, MUI
 - Backend: NestJS, TypeScript
-- Email: Nodemailer (server-side contact form)
 
 Project layout (top level):
 

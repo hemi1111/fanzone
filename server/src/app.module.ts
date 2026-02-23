@@ -16,7 +16,7 @@ import { MailModule } from './mail/mail.module';
       autoLoadEntities: true,
       synchronize: false,
       ssl: {
-        rejectUnauthorized: false, // Required for Supabase
+        rejectUnauthorized: false,
       },
     }),
     ProductsModule,

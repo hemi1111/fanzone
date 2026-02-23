@@ -33,6 +33,7 @@ import PosterCustomization, {
 } from "../../components/PosterCustomization";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ProductCarousel from "../../components/ProductCarousel";
+import { CATEGORY_CONFIGS } from "../../types/CategoryConfig";
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -268,7 +269,13 @@ const ProductDetail = () => {
         <Button
           variant="outlined"
           startIcon={<ArrowBackIcon />}
-          onClick={() => navigate("/")}
+          onClick={() =>
+            navigate(
+              product?.category && CATEGORY_CONFIGS[product.category]
+                ? CATEGORY_CONFIGS[product.category].route
+                : "/"
+            )
+          }
           sx={{ mb: 3 }}
         >
           Produktet
@@ -597,9 +604,7 @@ const ProductDetail = () => {
             {tabValue === 2 &&
               product.product_type === "poster" &&
               product.attributes?.poster_options && (
-                <FrameDetails
-                  posterOptions={product.attributes.poster_options}
-                />
+                <FrameDetails />
               )}
           </Box>
         </Box>

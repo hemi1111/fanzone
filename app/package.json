@@ -1,7 +1,7 @@
 {
   "name": "fanzone-app",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A fully functional storefront for framed sport designs.",
   "type": "module",
   "scripts": {

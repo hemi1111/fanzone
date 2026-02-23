@@ -29,7 +29,7 @@ export class MailController {
   @Post('contact')
   async sendContactMail(@Body() body: ContactMailDto) {
     const { name, email, message } = body;
-    const to = process.env.CONTACT_EMAIL || 'contact@fanzone.example';
+    const to = process.env.EMAIL_USER || 'business@email.example';
     const mailText = `Name: ${name}\nEmail: ${email}\nMessage: ${message}`;
     const mailHtml = `<p><strong>Name:</strong> ${name}</p><p><strong>Email:</strong> ${email}</p><p><strong>Message:</strong><br/>${message}</p>`;
     try {
