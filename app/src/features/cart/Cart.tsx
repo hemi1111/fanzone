@@ -1,4 +1,7 @@
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+
+import { translateCategory } from "../../utils/translateCategory";
 
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
@@ -24,32 +27,34 @@ import { useShop } from "../../contexts/ShopContext";
 
 export const buildAttributesText = (
   attributes: string | undefined,
-  isPoster: boolean
+  isPoster: boolean,
+  t: (key: string) => string
 ) => {
   if (!attributes) return "";
   if (!isPoster) {
     return `- ${attributes}`;
   }
   const colorMap: { [key: string]: string } = {
-    black: "e zezë",
-    white: "e bardhë",
+    black: t("cart.colorBlack"),
+    white: t("cart.colorWhite"),
   };
 
   const finishMap: { [key: string]: string } = {
-    framed: "me kornizë",
-    canvas: "kanavacë",
+    framed: t("cart.finishFramed"),
+    canvas: t("cart.finishCanvas"),
   };
 
   const parts = attributes.split("-").map((p) => p.trim());
 
   const size = parts[0];
-  const color = colorMap[parts[1].toLowerCase()] || parts[1];
-  const finish = finishMap[parts[2].toLowerCase()] || parts[2];
+  const color = colorMap[parts[1]?.toLowerCase()] ?? parts[1];
+  const finish = finishMap[parts[2]?.toLowerCase()] ?? parts[2];
 
   return `- ${size} - ${color} - ${finish}`;
 };
 
 const Cart = () => {
+  const { t } = useTranslation();
   const {
     cartItems,
     cartTotal,
@@ -59,7 +64,6 @@ const Cart = () => {
   }: any = useShop();
   const navigate = useNavigate();
 
-  // Free shipping logic
   const FREE_SHIPPING_THRESHOLD = 1500;
   const isFreeShippingEligible = cartTotal >= FREE_SHIPPING_THRESHOLD;
   const remainingForFreeShipping = Math.max(
@@ -85,7 +89,6 @@ const Cart = () => {
     removeFromCart(id, attribute);
   };
 
-  // Free Shipping Progress Component
   const FreeShippingProgress = () => (
     <Paper sx={{ p: 3, mb: 3 }}>
       <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
@@ -97,8 +100,8 @@ const Cart = () => {
         />
         <Typography variant="h6" fontWeight="bold">
           {isFreeShippingEligible
-            ? "Transport Falas!"
-            : "Transport Falas në 1500 ALL"}
+            ? t("cart.freeShipping")
+            : t("cart.freeShippingThreshold")}
         </Typography>
       </Box>
 
@@ -109,13 +112,15 @@ const Cart = () => {
           sx={{ mb: 2 }}
         >
           <Typography variant="body2">
-            Keni arritur transportin falas për këtë porosi.
+            {t("cart.freeShippingReached")}
           </Typography>
         </Alert>
       ) : (
         <>
           <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-            Ju duhen edhe {remainingForFreeShipping} ALL për transport falas
+            {t("cart.freeShippingRemaining", {
+              amount: remainingForFreeShipping,
+            })}
           </Typography>
 
           <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -166,10 +171,10 @@ const Cart = () => {
           sx={{ fontSize: 60, color: "text.secondary", mb: 2 }}
         />
         <Typography variant="h4" gutterBottom>
-          Shporta juaj është bosh
+          {t("cart.empty")}
         </Typography>
         <Typography variant="body1" color="text.secondary">
-          Ju nuk keni produkte ne shportë.
+          {t("cart.noProducts")}
         </Typography>
         <Button
           variant="contained"
@@ -178,7 +183,7 @@ const Cart = () => {
           onClick={() => navigate("/")}
           sx={{ mt: 2 }}
         >
-          Shiko produktet
+          {t("cart.viewProducts")}
         </Button>
       </Container>
     );
@@ -188,7 +193,7 @@ const Cart = () => {
     <Box sx={{ py: 4 }}>
       <Container maxWidth="xl">
         <Typography variant="h4" component="h1" fontWeight="bold" gutterBottom>
-          Shporta juaj
+          {t("cart.title")}
         </Typography>
 
         <Grid container spacing={4}>
@@ -223,11 +228,12 @@ const Cart = () => {
                           {item.name}{" "}
                           {buildAttributesText(
                             item.attribute,
-                            item.product_type === "poster"
+                            item.product_type === "poster",
+                            t
                           )}
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
-                          {item.category}
+                          {translateCategory(t, item.category)}
                         </Typography>
                         {item.discount && (
                           <Box
@@ -354,7 +360,7 @@ const Cart = () => {
                     size="large"
                     onClick={() => navigate("/")}
                   >
-                    Kthehu te produktet
+                    {t("cart.backToProducts")}
                   </Button>
                 </Grid>
                 <Grid size={{ xs: 12, md: 5 }}>
@@ -366,7 +372,7 @@ const Cart = () => {
                     size="large"
                     onClick={() => clearCart()}
                   >
-                    Fshi shportën
+                    {t("cart.clearCart")}
                   </Button>
                 </Grid>
               </Grid>
@@ -377,20 +383,20 @@ const Cart = () => {
           <Grid size={{ xs: 12, lg: 4 }}>
             <Paper sx={{ p: 3 }}>
               <Typography variant="h6" fontWeight="bold" gutterBottom>
-                Përmbledhje
+                {t("cart.summary")}
               </Typography>
 
               <Box
                 sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}
               >
-                <Typography variant="body1">Nëntotal</Typography>
+                <Typography variant="body1">{t("cart.subtotal")}</Typography>
                 <Typography variant="body1">{cartTotal} ALL</Typography>
               </Box>
 
               <Box
                 sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}
               >
-                <Typography variant="body1">Transporti</Typography>
+                <Typography variant="body1">{t("cart.shipping")}</Typography>
                 <Box sx={{ textAlign: "right" }}>
                   {isFreeShippingEligible ? (
                     <Box
@@ -412,7 +418,7 @@ const Cart = () => {
                         color="success.main"
                         fontWeight="bold"
                       >
-                        Falas
+                        {t("cart.free")}
                       </Typography>
                     </Box>
                   ) : (
@@ -427,7 +433,7 @@ const Cart = () => {
                 sx={{ display: "flex", justifyContent: "space-between", mb: 3 }}
               >
                 <Typography variant="h6" fontWeight="bold">
-                  Total
+                  {t("cart.total")}
                 </Typography>
                 <Typography variant="h6" fontWeight="bold" color="primary">
                   {finalTotal} ALL
@@ -440,14 +446,10 @@ const Cart = () => {
                 color="primary"
                 size="large"
                 fullWidth
-                sx={{
-                  mb: 2,
-                }}
-                onClick={() => {
-                  navigate("/checkout");
-                }}
+                sx={{ mb: 2 }}
+                onClick={() => navigate("/checkout")}
               >
-                Kalo te Pagesa
+                {t("cart.checkout")}
               </Button>
               <FreeShippingProgress />
             </Paper>

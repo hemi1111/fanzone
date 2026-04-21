@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { useForm, Controller } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -26,6 +27,7 @@ import { Autocomplete } from "@mui/material";
 import { albanianCities } from "./albanian-cities";
 
 const CheckoutPage = () => {
+  const { t } = useTranslation();
   const { cartItems, cartTotal, clearCart }: any = useShop();
 
   const navigate = useNavigate();
@@ -109,7 +111,7 @@ const CheckoutPage = () => {
   return (
     <Container maxWidth="md" sx={{ py: 5 }}>
       <Typography variant="h4" gutterBottom>
-        Përfundoni Porosinë
+        {t("checkout.title")}
       </Typography>
 
       <Box
@@ -118,9 +120,9 @@ const CheckoutPage = () => {
         noValidate
         sx={{ mt: 4 }}
       >
-        {/* ========== Personal Info Section ========== */}
+        {/* Personal Info Section */}
         <Typography variant="h6" gutterBottom>
-          Të dhënat personale
+          {t("checkout.personalInfo")}
         </Typography>
         <Grid container spacing={3}>
           <Grid size={{ xs: 12 }}>
@@ -130,17 +132,17 @@ const CheckoutPage = () => {
               rules={{
                 required: true,
                 pattern: {
-                  value: /^[A-Za-zÀ-ž\s]+$/, // letters (with accents) and spaces only
-                  message: "Emri nuk mund të përmbajë numra ose simbole",
+                  value: /^[A-Za-zÀ-ž\s]+$/,
+                  message: t("checkout.nameError"),
                 },
               }}
               render={({ field }) => (
                 <TextField
                   {...field}
-                  label="Emri i plotë"
+                  label={t("checkout.fullName")}
                   fullWidth
                   required
-                  placeholder="Emri Mbiemri"
+                  placeholder={t("checkout.namePlaceholder")}
                   error={!!errors.name}
                   helperText={errors.name?.message}
                 />
@@ -155,13 +157,13 @@ const CheckoutPage = () => {
                 required: true,
                 pattern: {
                   value: /^[^@\s]+@[^@\s]+\.[^@\s]+$/,
-                  message: "Email i pavlefshëm",
+                  message: t("checkout.emailError"),
                 },
               }}
               render={({ field }) => (
                 <TextField
                   {...field}
-                  label="Email"
+                  label={t("checkout.email")}
                   fullWidth
                   required
                   placeholder="email@example.com"
@@ -177,28 +179,21 @@ const CheckoutPage = () => {
               name="phone"
               control={control}
               rules={{
-                required: "Numri i telefonit është i detyrueshëm",
+                required: t("checkout.phoneRequired"),
                 validate: (value) => {
-                  // remove spaces before testing
                   const digits = value.replace(/\s+/g, "");
-
-                  // match local format: 06 + 9 digits (total 10)
                   const local = /^0[6-9]\d{8}$/;
-
-                  // match international format: +355 + 9 digits (total 12 with prefix)
                   const intl = /^\+355[6-9]\d{8}$/;
-
                   if (local.test(digits) || intl.test(digits)) {
                     return true;
                   }
-
-                  return "Numër telefoni i pavlefshëm për Shqipëri. Shembull: 0691234567 ose +355691234567";
+                  return t("checkout.phoneError");
                 },
               }}
               render={({ field }) => (
                 <TextField
                   {...field}
-                  label="Numri i telefonit"
+                  label={t("checkout.phone")}
                   fullWidth
                   required
                   placeholder="0691234567"
@@ -211,10 +206,10 @@ const CheckoutPage = () => {
           </Grid>
         </Grid>
 
-        {/* ========== Shipping Section ========== */}
+        {/* Shipping Section */}
         <Divider sx={{ my: 4 }} />
         <Typography variant="h6" gutterBottom>
-          Adresa
+          {t("checkout.addressSection")}
         </Typography>
         <Grid container spacing={3}>
           <Grid size={{ xs: 12 }}>
@@ -225,7 +220,7 @@ const CheckoutPage = () => {
               render={({ field }) => (
                 <TextField
                   {...field}
-                  label="Adresa / Rruga"
+                  label={t("checkout.addressStreet")}
                   fullWidth
                   required
                   error={!!errors.address}
@@ -237,19 +232,15 @@ const CheckoutPage = () => {
             <Controller
               name="city"
               control={control}
-              rules={{
-                required: "Zgjidhni qytetin",
-              }}
+              rules={{ required: t("checkout.cityRequired") }}
               render={({ field: { onChange, value, ref } }) => (
                 <Autocomplete
                   options={albanianCities}
                   value={value || null}
                   onInputChange={(_, newInputValue) => {
-                    // This tracks text input as user types
                     onChange(newInputValue);
                   }}
                   onChange={(_, newValue) => {
-                    // This triggers when selecting from dropdown
                     if (typeof newValue === "string") {
                       onChange(newValue);
                     } else {
@@ -260,7 +251,7 @@ const CheckoutPage = () => {
                   renderInput={(params) => (
                     <TextField
                       {...params}
-                      label="Qyteti"
+                      label={t("checkout.city")}
                       fullWidth
                       required
                       inputRef={ref}
@@ -279,7 +270,7 @@ const CheckoutPage = () => {
               render={({ field }) => (
                 <TextField
                   {...field}
-                  label="Kodi postar"
+                  label={t("checkout.postalCode")}
                   fullWidth
                   error={!!errors.postalCode}
                 />
@@ -291,7 +282,12 @@ const CheckoutPage = () => {
               name="country"
               control={control}
               render={({ field }) => (
-                <TextField {...field} label="Shteti" fullWidth disabled />
+                <TextField
+                  {...field}
+                  label={t("checkout.country")}
+                  fullWidth
+                  disabled
+                />
               )}
             />
           </Grid>
@@ -302,7 +298,7 @@ const CheckoutPage = () => {
               render={({ field }) => (
                 <TextField
                   {...field}
-                  label="Shënime shtesë (opsionale)"
+                  label={t("checkout.notes")}
                   fullWidth
                   multiline
                   rows={3}
@@ -312,10 +308,10 @@ const CheckoutPage = () => {
           </Grid>
         </Grid>
 
-        {/* ========== Cart Summary ========== */}
+        {/* Cart Summary */}
         <Divider sx={{ my: 4 }} />
         <Typography variant="h6" gutterBottom>
-          Përmbledhja e porosisë
+          {t("checkout.orderSummary")}
         </Typography>
         <Box sx={{ mb: 3 }}>
           {!product ? (
@@ -336,47 +332,43 @@ const CheckoutPage = () => {
           }}
         >
           <Stack spacing={1.5}>
-            {/* Subtotal */}
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
               <Typography variant="body1" fontWeight={600}>
-                Nëntotal
+                {t("checkout.subtotal")}
               </Typography>
               <Typography variant="body1">{totalPrice} ALL</Typography>
             </Box>
 
-            {/* Shipping */}
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
               <Typography variant="body1" fontWeight={600}>
-                Transporti
+                {t("checkout.shipping")}
               </Typography>
               <Typography
                 variant="body1"
                 color={totalPrice > 1500 ? "success.main" : "text.primary"}
                 fontWeight={600}
               >
-                {totalPrice > 1500 ? "Falas" : "200 ALL"}
+                {totalPrice > 1500 ? t("checkout.free") : "200 ALL"}
               </Typography>
             </Box>
 
             <Divider sx={{ my: 1 }} />
 
-            {/* Total */}
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
               <Typography variant="h6" fontWeight={700}>
-                Totali
+                {t("checkout.total")}
               </Typography>
               <Typography variant="h6" fontWeight={700} color="primary">
                 {total} ALL
               </Typography>
             </Box>
 
-            {/* Payment info */}
             <Typography
               variant="body2"
               color="text.secondary"
               sx={{ mt: 1, textAlign: "center" }}
             >
-              Paguani në dorëzim • <b>Cash On Delivery</b>
+              {t("checkout.payOnDelivery")}
             </Typography>
           </Stack>
         </Box>
@@ -388,7 +380,7 @@ const CheckoutPage = () => {
           onClose={() => clearErrors()}
         >
           <Alert severity="error" sx={{ mt: 2 }}>
-            Ju lutem plotësoni fushat e detyrueshme
+            {t("checkout.requiredFields")}
           </Alert>
         </Snackbar>
 
@@ -397,7 +389,7 @@ const CheckoutPage = () => {
           sx={{ display: "flex", justifyContent: "flex-end", gap: 2, mt: 4 }}
         >
           <Button variant="outlined" onClick={() => navigate(-1)}>
-            Anulo
+            {t("checkout.cancel")}
           </Button>
           <Button
             type="submit"
@@ -405,11 +397,10 @@ const CheckoutPage = () => {
             size="large"
             disabled={isPending}
           >
-            {isPending ? "Duke Dërguar..." : "Përfundo Porosinë"}
+            {isPending ? t("checkout.submitting") : t("checkout.submit")}
           </Button>
         </Box>
       </Box>
-      {/* Confirmation Modal */}
       <Modal />
     </Container>
   );

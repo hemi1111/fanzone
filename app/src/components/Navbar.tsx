@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Link as RouterLink, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -21,6 +22,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import Logo from "./Logo";
 import MobileDrawer from "./MobileDrawer";
 import SearchProducts from "./SearchProducts";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 import { useShop } from "../contexts/ShopContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -34,6 +36,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const Navbar = () => {
+  const { t } = useTranslation();
+
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchValue, setSearchValue] = useState<string>("");
@@ -47,32 +51,32 @@ const Navbar = () => {
 
   const pagesList = [
     {
-      name: "Kryefaqja",
+      name: t("nav.home"),
       path: "/",
       icon: <FontAwesomeIcon icon={faHome} size="lg" />,
     },
     {
-      name: "F1",
+      name: t("nav.f1"),
       path: "/f1",
       icon: <FontAwesomeIcon icon={faFlagCheckered} size="lg" />,
     },
     {
-      name: "Futboll",
+      name: t("nav.football"),
       path: "/futboll",
       icon: <FontAwesomeIcon icon={faSoccerBall} size="lg" />,
     },
     {
-      name: "Basketboll",
+      name: t("nav.basketball"),
       path: "/basketboll",
       icon: <FontAwesomeIcon icon={faBasketball} size="lg" />,
     },
     {
-      name: "Makina",
+      name: t("nav.cars"),
       path: "/makina",
       icon: <FontAwesomeIcon icon={faCar} size="lg" />,
     },
     {
-      name: "Filma",
+      name: t("nav.movies"),
       path: "/filma",
       icon: <FontAwesomeIcon icon={faCameraRetro} size="lg" />,
     },
@@ -176,7 +180,7 @@ const Navbar = () => {
           >
             {pagesList.map((page) => (
               <Button
-                key={page.name}
+                key={page.path}
                 component={RouterLink}
                 to={page.path}
                 sx={{
@@ -205,6 +209,7 @@ const Navbar = () => {
               </Button>
             ))}
           </Box>
+
           <Box
             width={"fit-content"}
             sx={{
@@ -212,16 +217,17 @@ const Navbar = () => {
               flexDirection: "row",
               justifyContent:
                 location.pathname === "/" ? "space-between" : "flex-end",
+              alignItems: "center",
             }}
           >
-            {/*Mobile Search*/}
+            {/* Mobile Search */}
             <Box
               sx={{
                 display: { xs: "flex", md: "none" },
                 alignItems: "center",
                 width: "100%",
                 position: "relative",
-                minHeight: "40px", // Prevent layout shift
+                minHeight: "40px",
               }}
             >
               {/* Search Field with transition */}
@@ -239,7 +245,7 @@ const Navbar = () => {
                   <TextField
                     inputRef={mobileInputRef}
                     type="search"
-                    placeholder={"Kërko ..."}
+                    placeholder={t("nav.search")}
                     value={searchValue}
                     onChange={(e) => {
                       setSearchValue(e.target.value);
@@ -282,8 +288,8 @@ const Navbar = () => {
                   <Popper
                     open={showSuggestions && searchValue.length > 0}
                     anchorEl={anchorEl}
-                    disablePortal={false} // makes sure it's rendered in <body>
-                    sx={{ zIndex: 1200 }} // set z-index cleanly
+                    disablePortal={false}
+                    sx={{ zIndex: 1200 }}
                     placement="bottom-start"
                     style={{ width: "100%" }}
                   >
@@ -337,7 +343,7 @@ const Navbar = () => {
                 sx={{
                   position: "absolute",
                   right: 0,
-                  width: "350px",
+                  width: "320px",
                   opacity: searchOpen ? 1 : 0,
                   pointerEvents: searchOpen ? "auto" : "none",
                   transition: "all 0.8s cubic-bezier(.4,1.3,.6,1)",
@@ -350,7 +356,7 @@ const Navbar = () => {
                     <TextField
                       inputRef={inputRef}
                       type="search"
-                      placeholder={"Kërko ..."}
+                      placeholder={t("nav.search")}
                       value={searchValue}
                       onChange={(e) => {
                         setSearchValue(e.target.value);
@@ -411,6 +417,7 @@ const Navbar = () => {
               </Box>
             </Box>
 
+
             {/* Cart */}
             <Box sx={{ flexGrow: 0, display: "flex", alignItems: "center" }}>
               <IconButton
@@ -428,6 +435,10 @@ const Navbar = () => {
                 </Badge>
               </IconButton>
             </Box>
+                {/* Language Switcher */}
+                <Box sx={{ display: { xs: "none", md: "flex" }, alignItems: "center" }}>
+                  <LanguageSwitcher variant="navbar" />
+                </Box>
           </Box>
         </Toolbar>
       </Container>

@@ -11,9 +11,12 @@ import ListItemButton from "@mui/material/ListItemButton";
 import CircularProgress from "@mui/material/CircularProgress";
 import Chip from "@mui/material/Chip";
 
+import { useTranslation } from "react-i18next";
+
 import { useSearchProducts } from "../hooks/useSearchProducts";
 import { useNavigate } from "react-router-dom";
 import type { Product } from "../types/Product";
+import { translateCategory } from "../utils/translateCategory";
 
 // Helper function to get price range for posters with different sizes
 const getPosterPriceRange = (product: Product) => {
@@ -85,6 +88,7 @@ const SearchProducts = ({
   searchValue: string;
   setShowSuggestions: any;
 }) => {
+  const { t } = useTranslation();
   const [searchValueTimeout, setSearchValueTimeout] = useState<string>("");
   const { data: products, isLoading } = useSearchProducts(searchValueTimeout);
 
@@ -162,7 +166,7 @@ const SearchProducts = ({
                   <Stack>
                     {product.name}
                     <Typography color="grey" variant="subtitle2">
-                      {product.category}
+                      {translateCategory(t, product.category)}
                     </Typography>
                   </Stack>
                 }
@@ -184,7 +188,7 @@ const SearchProducts = ({
                                 color="primary"
                                 noWrap
                               >
-                                Nga{" "}
+                                {t("cart.priceFrom")}{" "}
                                 {priceRange.minDiscounted.toLocaleString(
                                   "sq-AL"
                                 )}{" "}
@@ -198,7 +202,7 @@ const SearchProducts = ({
                                 {priceRange.min.toLocaleString("sq-AL")} ALL
                               </Typography>
                               <Chip
-                                label="ZBRITJE"
+                                label={t("product.discountLabel")}
                                 color="error"
                                 size="small"
                                 sx={{
@@ -212,7 +216,7 @@ const SearchProducts = ({
                         } else {
                           return (
                             <Typography variant="body2" color="primary" noWrap>
-                              Nga {priceRange.min.toLocaleString("sq-AL")} ALL
+                              {t("cart.priceFrom")} {priceRange.min.toLocaleString("sq-AL")} ALL
                             </Typography>
                           );
                         }
@@ -226,7 +230,7 @@ const SearchProducts = ({
                                 color="primary"
                                 noWrap
                               >
-                                Nga{" "}
+                                {t("cart.priceFrom")}{" "}
                                 {priceRange.minDiscounted.toLocaleString(
                                   "sq-AL"
                                 )}{" "}
@@ -240,7 +244,7 @@ const SearchProducts = ({
                                 {priceRange.min.toLocaleString("sq-AL")} ALL
                               </Typography>
                               <Chip
-                                label="ZBRITJE"
+                                label={t("product.discountLabel")}
                                 color="error"
                                 size="small"
                                 sx={{
@@ -254,7 +258,7 @@ const SearchProducts = ({
                         } else {
                           return (
                             <Typography variant="body2" color="primary" noWrap>
-                              Nga {priceRange.min.toLocaleString("sq-AL")} ALL
+                              {t("cart.priceFrom")} {priceRange.min.toLocaleString("sq-AL")} ALL
                             </Typography>
                           );
                         }
@@ -273,7 +277,7 @@ const SearchProducts = ({
                               {product.price?.toLocaleString("sq-AL")} ALL
                             </Typography>
                             <Chip
-                              label="ZBRITJE"
+                              label={t("product.discountLabel")}
                               color="error"
                               size="small"
                               sx={{
@@ -309,7 +313,7 @@ const SearchProducts = ({
               sx={{ width: "100%", textAlign: "center" }}
               color="text.secondary"
             >
-              Produkti nuk u gjet, kerkoni ndryshe
+              {t("products.noResultsSearch")}
             </Typography>
           </ListItem>
         )}

@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
@@ -7,44 +9,45 @@ import { useNavigate } from "react-router-dom";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
+const showcaseItems = [
+  {
+    key: "formula1",
+    link: "f1",
+    background:
+      "https://vgtfcayksprxvzdcikrx.supabase.co/storage/v1/object/public/f1-images/Showcase/f1_category.jpg",
+  },
+  {
+    key: "football",
+    link: "football",
+    background:
+      "https://vgtfcayksprxvzdcikrx.supabase.co/storage/v1/object/public/f1-images/Showcase/football_category.jpg",
+  },
+  {
+    key: "basketball",
+    link: "basketball",
+    background:
+      "https://vgtfcayksprxvzdcikrx.supabase.co/storage/v1/object/public/f1-images/Showcase/basketball_category.jpg",
+  },
+  {
+    key: "cars",
+    link: "cars",
+    background:
+      "https://vgtfcayksprxvzdcikrx.supabase.co/storage/v1/object/public/f1-images/Showcase/cars_category.jpg",
+  },
+  {
+    key: "movies",
+    link: "movies",
+    background:
+      "https://vgtfcayksprxvzdcikrx.supabase.co/storage/v1/object/public/f1-images/Showcase/movies_category.jpg",
+  },
+];
+
 const Showcase = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
-  const showcaseItems = [
-    {
-      title: "Formula 1",
-      link: "f1",
-      background:
-        "https://vgtfcayksprxvzdcikrx.supabase.co/storage/v1/object/public/f1-images/Showcase/f1_category.jpg",
-    },
-    {
-      title: "Futboll",
-      link: "football",
-      background:
-        "https://vgtfcayksprxvzdcikrx.supabase.co/storage/v1/object/public/f1-images/Showcase/football_category.jpg",
-    },
-    {
-      title: "Basketboll",
-      link: "basketball",
-      background:
-        "https://vgtfcayksprxvzdcikrx.supabase.co/storage/v1/object/public/f1-images/Showcase/basketball_category.jpg",
-    },
-    {
-      title: "Makina",
-      link: "cars",
-      background:
-        "https://vgtfcayksprxvzdcikrx.supabase.co/storage/v1/object/public/f1-images/Showcase/cars_category.jpg",
-    },
-    {
-      title: "Filma",
-      link: "movies",
-      background:
-        "https://vgtfcayksprxvzdcikrx.supabase.co/storage/v1/object/public/f1-images/Showcase/movies_category.jpg",
-    },
-  ];
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Helper function to check if background is a video
   const isVideo = (url: string) => {
     if (!url.startsWith("http")) return false;
     return /\.(mp4|webm|ogg|mov)$/i.test(url);
@@ -69,7 +72,7 @@ const Showcase = () => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % showcaseItems.length);
     }, 8000);
     return () => clearInterval(interval);
-  }, [showcaseItems.length]);
+  }, []);
 
   const item = showcaseItems[currentIndex];
 
@@ -84,7 +87,7 @@ const Showcase = () => {
         cursor: "pointer",
       }}
     >
-      <Fade in timeout={800} key={item.title}>
+      <Fade in timeout={800} key={item.key}>
         <Box
           onClick={() => handleClick(item.link)}
           sx={{
@@ -99,7 +102,6 @@ const Showcase = () => {
             position: "absolute",
             inset: 0,
             transition: "all 0.3s ease",
-            // Only apply backgroundImage if it's not a video
             ...(isVideo(item.background)
               ? {}
               : {
@@ -115,7 +117,6 @@ const Showcase = () => {
                 }),
           }}
         >
-          {/* Video background if it's a video */}
           {isVideo(item.background) && (
             <Box
               component="video"
@@ -136,7 +137,6 @@ const Showcase = () => {
             </Box>
           )}
 
-          {/* Overlay for better text visibility */}
           <Box
             sx={{
               position: "absolute",
@@ -155,7 +155,7 @@ const Showcase = () => {
             gutterBottom
             sx={{ position: "relative", zIndex: 2 }}
           >
-            {item.title}
+            {t(`showcase.${item.key}`)}
           </Typography>
         </Box>
       </Fade>

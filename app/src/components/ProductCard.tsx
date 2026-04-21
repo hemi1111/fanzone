@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
@@ -12,8 +13,8 @@ import Snackbar from "@mui/material/Snackbar";
 import Stack from "@mui/material/Stack";
 
 import type { Product } from "../types/Product";
+import { translateCategory } from "../utils/translateCategory";
 
-// Helper function to get price range for posters with different sizes
 const getPosterPriceRange = (product: Product) => {
   if (
     product.product_type !== "poster" ||
@@ -23,12 +24,10 @@ const getPosterPriceRange = (product: Product) => {
   }
 
   const pricing = product.attributes.poster_options.pricing;
-  // Ensure we always have a number for discount percentage, defaulting to 20% for products with discount flag
   const discountPercentage =
     product.attributes.poster_options.discount_percentage;
   const allPrices: number[] = [];
 
-  // Collect all prices from different sizes and materials
   Object.values(pricing).forEach((sizeOptions: any) => {
     Object.values(sizeOptions).forEach((price: any) => {
       if (typeof price === "number") {
@@ -42,7 +41,6 @@ const getPosterPriceRange = (product: Product) => {
   const minPrice = Math.min(...allPrices);
   const maxPrice = Math.max(...allPrices);
 
-  // Apply discount if product has discount flag and discount_percentage exists
   const hasValidDiscount = product.discount && discountPercentage > 0;
   const minDiscountedPrice = hasValidDiscount
     ? Math.round(minPrice * (1 - discountPercentage / 100))
@@ -51,7 +49,6 @@ const getPosterPriceRange = (product: Product) => {
     ? Math.round(maxPrice * (1 - discountPercentage / 100))
     : maxPrice;
 
-  // If min and max are the same, return single price
   if (minPrice === maxPrice) {
     return {
       min: minPrice,
@@ -85,8 +82,8 @@ const ProductCard = ({
   const { id, name, price, final_price, thumbnail, category, discount } =
     product;
 
+  const { t } = useTranslation();
   const [openSnackbar, setOpenSnackbar] = useState(false);
-
   const navigate = useNavigate();
 
   const handleCardClick = () => {
@@ -121,7 +118,7 @@ const ProductCard = ({
       >
         {discount && (
           <Chip
-            label={`ZBRITJE`}
+            label={t("product.discountLabel")}
             color="error"
             size="small"
             sx={{
@@ -164,7 +161,7 @@ const ProductCard = ({
               textTransform: "uppercase",
             }}
           >
-            {category}
+            {translateCategory(t, category)}
           </Typography>
           <Typography
             gutterBottom
@@ -192,7 +189,6 @@ const ProductCard = ({
               const priceRange = getPosterPriceRange(product);
 
               if (priceRange && !priceRange.isSinglePrice) {
-                // Display starting from min price for posters with different sizes
                 if (priceRange.hasDiscount) {
                   return (
                     <Stack direction="row" alignItems="center">
@@ -206,8 +202,8 @@ const ProductCard = ({
                           letterSpacing: "-0.02em",
                         }}
                       >
-                        Nga {priceRange.minDiscounted.toLocaleString("sq-AL")}{" "}
-                        ALL
+                        {t("cart.priceFrom")}{" "}
+                        {priceRange.minDiscounted.toLocaleString("sq-AL")} ALL
                       </Typography>
                       <Typography
                         variant="body2"
@@ -236,12 +232,12 @@ const ProductCard = ({
                         letterSpacing: "-0.02em",
                       }}
                     >
-                      Nga {priceRange.min.toLocaleString("sq-AL")} ALL
+                      {t("cart.priceFrom")}{" "}
+                      {priceRange.min.toLocaleString("sq-AL")} ALL
                     </Typography>
                   );
                 }
               } else if (priceRange && priceRange.isSinglePrice) {
-                // Single price poster (all sizes/materials have same price)
                 if (priceRange.hasDiscount) {
                   return (
                     <Stack direction="row" alignItems="center">
@@ -254,8 +250,8 @@ const ProductCard = ({
                           letterSpacing: "-0.02em",
                         }}
                       >
-                        Nga {priceRange.minDiscounted.toLocaleString("sq-AL")}{" "}
-                        ALL
+                        {t("cart.priceFrom")}{" "}
+                        {priceRange.minDiscounted.toLocaleString("sq-AL")} ALL
                       </Typography>
                       <Typography
                         variant="body2"
@@ -284,12 +280,12 @@ const ProductCard = ({
                         letterSpacing: "-0.02em",
                       }}
                     >
-                      Nga {priceRange.min.toLocaleString("sq-AL")} ALL
+                      {t("cart.priceFrom")}{" "}
+                      {priceRange.min.toLocaleString("sq-AL")} ALL
                     </Typography>
                   );
                 }
               } else if (discount) {
-                // Original discount logic for non-poster products
                 return (
                   <Stack direction="row" alignItems="center">
                     <Typography
@@ -319,7 +315,6 @@ const ProductCard = ({
                   </Stack>
                 );
               } else {
-                // Original single price logic for non-poster products
                 return (
                   <Typography
                     variant="h6"
@@ -356,10 +351,10 @@ const ProductCard = ({
                 color: "black",
               }}
             >
-              Produkti u shtua në shportë
+              {t("cart.addedToCart")}
             </Link>
           ) : (
-            "Për këtë produkt, zgjidhni opsionet para se ta shtoni në shportë."
+            t("cart.selectOptions")
           )}
         </Alert>
       </Snackbar>

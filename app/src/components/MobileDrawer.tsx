@@ -1,4 +1,5 @@
 import type { Dispatch, SetStateAction } from "react";
+import { useTranslation } from "react-i18next";
 
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
@@ -23,6 +24,7 @@ import CategoryIcon from "@mui/icons-material/Category";
 
 import { Link as RouterLink, useNavigate, useLocation } from "react-router-dom";
 import Logo from "./Logo";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 interface MobileDrawerProps {
   drawerOpen: boolean;
@@ -35,6 +37,7 @@ const MobileDrawer = ({
   toggleDrawer,
   pages,
 }: MobileDrawerProps) => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -101,7 +104,7 @@ const MobileDrawer = ({
         >
           <Box>
             {pages.map((page: any) => (
-              <ListItem key={page.name} disablePadding>
+              <ListItem key={page.path} disablePadding>
                 <ListItemButton
                   onClick={() => {
                     toggleDrawer(false);
@@ -164,7 +167,7 @@ const MobileDrawer = ({
                   <ShoppingCartIcon />
                 </ListItemIcon>
                 <ListItemText
-                  primary={"Shporta"}
+                  primary={t("nav.cart")}
                   sx={{
                     "& .MuiTypography-root": {
                       fontWeight: 500,
@@ -204,7 +207,13 @@ const MobileDrawer = ({
             </ListItem>
 
             <Divider sx={{ mt: 2, borderColor: "#e0e0e0" }} />
+
+            {/* Language switcher in mobile drawer */}
+            <ListItem sx={{ px: 2, py: 1 }}>
+              <LanguageSwitcher variant="footer" />
+            </ListItem>
           </Box>
+
           <Stack sx={{ p: 2 }}>
             <Stack
               direction="row"

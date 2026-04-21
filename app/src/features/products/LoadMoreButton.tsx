@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -21,6 +22,7 @@ const LoadMoreButton: FC<LoadMoreButtonProps> = ({
   currentCount = 0,
   totalCount = 0,
 }) => {
+  const { t } = useTranslation();
   const progressPercentage =
     totalCount > 0 ? (currentCount / totalCount) * 100 : 0;
 
@@ -29,7 +31,7 @@ const LoadMoreButton: FC<LoadMoreButtonProps> = ({
       {/* Pagination Info */}
       <Box sx={{ textAlign: "center", mb: 2 }}>
         <Typography variant="body2" color="text.secondary">
-          {currentCount} nga {totalCount} produkte
+          {t("products.count", { current: currentCount, total: totalCount })}
         </Typography>
       </Box>
 
@@ -67,7 +69,7 @@ const LoadMoreButton: FC<LoadMoreButtonProps> = ({
             {isFetchingNextPage ? (
               <CircularProgress size={24} color="inherit" />
             ) : (
-              "Shfaq më shumë"
+              t("products.loadMore")
             )}
           </Button>
         </Box>

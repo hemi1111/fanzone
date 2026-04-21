@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState, type FC } from "react";
+import { useTranslation } from "react-i18next";
 
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -12,6 +13,7 @@ export type FallbackErrorBoundaryProps = {
 export const FallbackErrorBoundary: FC<FallbackErrorBoundaryProps> = ({
   resetErrorBoundary,
 }) => {
+  const { t } = useTranslation();
   const [seconds, setSeconds] = useState<number>(30);
 
   const handleReset = useCallback(() => {
@@ -53,12 +55,9 @@ export const FallbackErrorBoundary: FC<FallbackErrorBoundaryProps> = ({
         />
       </Box>
 
-      <Typography color={"grey"}>
-        Ndodhi nje problem gjatë ngarkimit të faqes. Ju lutemi, provoni përsëri
-        më vonë.
-      </Typography>
+      <Typography color={"grey"}>{t("error.message")}</Typography>
       <Button size="large" variant="outlined" onClick={resetErrorBoundary}>
-        Rifresko {seconds}
+        {t("error.refresh", { seconds })}
       </Button>
     </Stack>
   );

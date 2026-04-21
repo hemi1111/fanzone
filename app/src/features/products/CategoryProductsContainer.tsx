@@ -19,7 +19,10 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import SortIcon from "@mui/icons-material/Sort";
 import SearchIcon from "@mui/icons-material/Search";
 
+import { useTranslation } from "react-i18next";
+
 import { useShop } from "../../contexts/ShopContext";
+import { translateCategory } from "../../utils/translateCategory";
 import ProductsGrid from "./ProductsGrid";
 import PriceFilter from "../../components/PriceFilter";
 import ProductTypeFilter from "../../components/ProductTypeFilter";
@@ -35,6 +38,7 @@ interface CategoryProductsContainerProps {
 const CategoryProductsContainer = ({
   category,
 }: CategoryProductsContainerProps) => {
+  const { t } = useTranslation();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -118,20 +122,20 @@ const CategoryProductsContainer = ({
   // Quick filter presets
   const quickFilters = [
     {
-      label: "Nën 1500 ALL",
+      label: t("products.quickFilterUnder1500"),
       action: () => {
         setPriceRange([0, 1500]);
         setPriceInput([0, 1500]);
       },
     },
     {
-      label: "Nën 3000 ALL",
+      label: t("products.quickFilterUnder3000"),
       action: () => {
         setPriceRange([0, 3000]);
         setPriceInput([0, 3000]);
       },
     },
-    { label: "Në Zbritje", action: () => setShowDiscountedOnly(true) },
+    { label: t("products.quickFilterOnSale"), action: () => setShowDiscountedOnly(true) },
   ];
 
   const handlePriceChange = (newValue: any) => {
@@ -174,7 +178,7 @@ const CategoryProductsContainer = ({
             <ArrowBackIosIcon />
           </IconButton>
           <Typography variant="h6" sx={{ ml: 1 }}>
-            Filtrat
+            {t("products.filters")}
           </Typography>
         </Box>
       )}
@@ -195,7 +199,7 @@ const CategoryProductsContainer = ({
       {categoryConfig.availableFilters.includes("price") && (
         <>
           <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-            Çmimi
+            {t("products.price")}
           </Typography>
           <Box sx={{ mr: 2, mt: 2 }}>
             <PriceFilter
@@ -227,7 +231,7 @@ const CategoryProductsContainer = ({
             }}
           />
         }
-        label="Produktet në Zbritje"
+        label={t("products.discountedOnly")}
       />
 
       <Button
@@ -244,7 +248,7 @@ const CategoryProductsContainer = ({
           },
         }}
       >
-        Fshi filtrat
+        {t("products.clearFilters")}
       </Button>
     </Box>
   );
@@ -273,7 +277,7 @@ const CategoryProductsContainer = ({
       <Box sx={{ mb: 3 }}>
         <TextField
           fullWidth
-          placeholder={`Kërko në ${categoryConfig.name}...`}
+          placeholder={t("products.searchPlaceholder", { name: translateCategory(t, category) })}
           value={searchInput}
           onChange={(e) => handleCategorySearch(e.target.value)}
           InputProps={{
@@ -307,7 +311,7 @@ const CategoryProductsContainer = ({
       {/* Quick Filter Chips */}
       <Box sx={{ mb: 3, textAlign: "center" }}>
         <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-          Filtra të shpejtë:
+          {t("products.quickFilters")}
         </Typography>
         <Box
           sx={{
@@ -342,7 +346,7 @@ const CategoryProductsContainer = ({
       {hasActiveFilters && (
         <Box sx={{ mb: 3 }}>
           <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-            Filtrat e aplikuar:
+            {t("products.appliedFilters")}
           </Typography>
           <Box
             sx={{
@@ -354,7 +358,7 @@ const CategoryProductsContainer = ({
           >
             {categorySearch && (
               <Chip
-                label={`Kërkimi: "${categorySearch}"`}
+                label={t("products.searchChip", { value: categorySearch })}
                 onDelete={() => {
                   setCategorySearch("");
                   setSearchInput("");
@@ -367,7 +371,7 @@ const CategoryProductsContainer = ({
             {selectedProductTypes.map((type) => (
               <Chip
                 key={type}
-                label={`Lloji: ${type}`}
+                label={t("products.typeChip", { type })}
                 onDelete={() =>
                   setSelectedProductTypes((prev) =>
                     prev.filter((t) => t !== type)
@@ -379,7 +383,7 @@ const CategoryProductsContainer = ({
             ))}
             {(priceRange[0] > 0 || priceRange[1] < 5000) && (
               <Chip
-                label={`Çmimi: ${priceRange[0]} - ${priceRange[1]} ALL`}
+                label={t("products.priceChip", { min: priceRange[0], max: priceRange[1] })}
                 onDelete={() => {
                   setPriceRange([0, 5000]);
                   setPriceInput([0, 5000]);
@@ -391,7 +395,7 @@ const CategoryProductsContainer = ({
 
             {showDiscountedOnly && (
               <Chip
-                label="Në Zbritje"
+                label={t("products.quickFilterOnSale")}
                 onDelete={() => setShowDiscountedOnly(false)}
                 size="small"
                 variant="filled"
@@ -399,7 +403,7 @@ const CategoryProductsContainer = ({
             )}
             {sortOption !== "default" && (
               <Chip
-                label={`Renditja: ${sortOption}`}
+                label={t("products.sortChip", { option: sortOption })}
                 onDelete={() => setSortOption("default")}
                 size="small"
                 variant="filled"
@@ -423,7 +427,7 @@ const CategoryProductsContainer = ({
               }}
             >
               <Typography variant="h6" fontWeight="bold" gutterBottom>
-                Filtrat
+                {t("products.filters")}
               </Typography>
               {renderFilters()}
             </Box>
@@ -457,7 +461,7 @@ const CategoryProductsContainer = ({
                   },
                 }}
               >
-                Filtrat
+                {t("products.filters")}
                 {hasActiveFilters && (
                   <Box
                     sx={{
@@ -494,11 +498,11 @@ const CategoryProductsContainer = ({
                   startAdornment: <SortIcon sx={{ mr: 1, color: "#333" }} />,
                 }}
               >
-                <MenuItem value="default">Parazgjedhje</MenuItem>
-                <MenuItem value="price-low">Çmimi: Ulët në Lartë</MenuItem>
-                <MenuItem value="price-high">Çmimi: Lartë në Ulët</MenuItem>
-                <MenuItem value="name-asc">Emri: A-Z</MenuItem>
-                <MenuItem value="name-desc">Emri: Z-A</MenuItem>
+                <MenuItem value="default">{t("products.sortDefault")}</MenuItem>
+                <MenuItem value="price-low">{t("products.sortPriceLow")}</MenuItem>
+                <MenuItem value="price-high">{t("products.sortPriceHigh")}</MenuItem>
+                <MenuItem value="name-asc">{t("products.sortNameAsc")}</MenuItem>
+                <MenuItem value="name-desc">{t("products.sortNameDesc")}</MenuItem>
               </TextField>
             </Box>
           )}
@@ -514,7 +518,7 @@ const CategoryProductsContainer = ({
               }}
             >
               <Typography variant="body1" color="text.secondary">
-                Kategoria: {categoryConfig.name}
+                {t("products.categoryLabel", { name: translateCategory(t, category) })}
               </Typography>
 
               <TextField
@@ -540,11 +544,11 @@ const CategoryProductsContainer = ({
                   startAdornment: <SortIcon sx={{ mr: 1, color: "#333" }} />,
                 }}
               >
-                <MenuItem value="default">Parazgjedhje</MenuItem>
-                <MenuItem value="price-low">Çmimi: Ulët në Lartë</MenuItem>
-                <MenuItem value="price-high">Çmimi: Lartë në Ulët</MenuItem>
-                <MenuItem value="name-asc">Emri: A-Z</MenuItem>
-                <MenuItem value="name-desc">Emri: Z-A</MenuItem>
+                <MenuItem value="default">{t("products.sortDefault")}</MenuItem>
+                <MenuItem value="price-low">{t("products.sortPriceLow")}</MenuItem>
+                <MenuItem value="price-high">{t("products.sortPriceHigh")}</MenuItem>
+                <MenuItem value="name-asc">{t("products.sortNameAsc")}</MenuItem>
+                <MenuItem value="name-desc">{t("products.sortNameDesc")}</MenuItem>
               </TextField>
             </Box>
           )}
