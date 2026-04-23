@@ -74,17 +74,6 @@ const PosterCustomization: React.FC<PosterCustomizationProps> = ({
                 fontWeight: "medium",
                 textTransform: "none",
                 borderRadius: 1,
-                backgroundColor:
-                  selections.size === size ? "#lightblue" : "transparent",
-                borderColor:
-                  selections.size === size ? "#lightblue" : "#e0e0e0",
-                color: selections.size === size ? "white" : "text.primary",
-                "&:hover": {
-                  backgroundColor:
-                    selections.size === size
-                      ? "#lightblue"
-                      : "rgba(0, 0, 0, 0.04)",
-                },
               }}
             >
               {size}
@@ -130,20 +119,6 @@ const PosterCustomization: React.FC<PosterCustomizationProps> = ({
                 fontWeight: "medium",
                 textTransform: "none",
                 borderRadius: 1,
-                backgroundColor:
-                  selections.material === material
-                    ? "#lightblue"
-                    : "transparent",
-                borderColor:
-                  selections.material === material ? "#lightblue" : "#e0e0e0",
-                color:
-                  selections.material === material ? "white" : "text.primary",
-                "&:hover": {
-                  backgroundColor:
-                    selections.material === material
-                      ? "#lightblue"
-                      : "rgba(0, 0, 0, 0.04)",
-                },
               }}
             >
               {getMaterialLabel(material)}
@@ -182,14 +157,6 @@ const PosterCustomization: React.FC<PosterCustomizationProps> = ({
                   fontWeight: "medium",
                   textTransform: "none",
                   borderRadius: 1,
-                  color:
-                    selections.frameColor === color ? "white" : "text.primary",
-                  "&:hover": {
-                    backgroundColor:
-                      selections.frameColor === color
-                        ? "#lightblue"
-                        : "rgba(0, 0, 0, 0.04)",
-                  },
                 }}
               >
                 {getColorLabel(color)}

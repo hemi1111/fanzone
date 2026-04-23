@@ -99,7 +99,7 @@ const ProductCard = ({
       <Card
         onClick={handleCardClick}
         sx={{
-          width: 345,
+          width: "100%",
           cursor: "pointer",
           position: "relative",
           height: "100%",

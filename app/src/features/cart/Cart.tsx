@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
@@ -14,6 +15,11 @@ import Divider from "@mui/material/Divider";
 import TextField from "@mui/material/TextField";
 import LinearProgress from "@mui/material/LinearProgress";
 import Alert from "@mui/material/Alert";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogActions from "@mui/material/DialogActions";
 
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
@@ -64,6 +70,9 @@ const Cart = () => {
   }: any = useShop();
   const navigate = useNavigate();
 
+  const [clearDialogOpen, setClearDialogOpen] = useState(false);
+  const [removeTarget, setRemoveTarget] = useState<{ id: any; attribute?: string } | null>(null);
+
   const FREE_SHIPPING_THRESHOLD = 1500;
   const isFreeShippingEligible = cartTotal >= FREE_SHIPPING_THRESHOLD;
   const remainingForFreeShipping = Math.max(
@@ -86,7 +95,19 @@ const Cart = () => {
   };
 
   const handleRemoveItem = (id: any, attribute?: string) => {
-    removeFromCart(id, attribute);
+    setRemoveTarget({ id, attribute });
+  };
+
+  const confirmRemove = () => {
+    if (removeTarget) {
+      removeFromCart(removeTarget.id, removeTarget.attribute);
+      setRemoveTarget(null);
+    }
+  };
+
+  const confirmClearCart = () => {
+    clearCart();
+    setClearDialogOpen(false);
   };
 
   const FreeShippingProgress = () => (
@@ -370,7 +391,7 @@ const Cart = () => {
                     color="error"
                     fullWidth
                     size="large"
-                    onClick={() => clearCart()}
+                    onClick={() => setClearDialogOpen(true)}
                   >
                     {t("cart.clearCart")}
                   </Button>
@@ -456,6 +477,34 @@ const Cart = () => {
           </Grid>
         </Grid>
       </Container>
+
+      {/* Clear cart confirmation */}
+      <Dialog open={clearDialogOpen} onClose={() => setClearDialogOpen(false)}>
+        <DialogTitle>{t("cart.clearCartTitle")}</DialogTitle>
+        <DialogContent>
+          <DialogContentText>{t("cart.clearCartConfirm")}</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setClearDialogOpen(false)}>{t("checkout.cancel")}</Button>
+          <Button onClick={confirmClearCart} color="error" variant="contained">
+            {t("cart.clearCart")}
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Remove item confirmation */}
+      <Dialog open={!!removeTarget} onClose={() => setRemoveTarget(null)}>
+        <DialogTitle>{t("cart.removeItemTitle")}</DialogTitle>
+        <DialogContent>
+          <DialogContentText>{t("cart.removeItemConfirm")}</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setRemoveTarget(null)}>{t("checkout.cancel")}</Button>
+          <Button onClick={confirmRemove} color="error" variant="contained">
+            {t("cart.removeItem")}
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 };

@@ -40,14 +40,19 @@
     }
   },
   "home": {
-    "browseCollection": "Sfoglia la Collezione"
+    "browseCollection": "Sfoglia la Collezione",
+    "ourProducts": "I Nostri Prodotti",
+    "ourProductsSubtitle": "Scopri la nostra esclusiva collezione di prodotti"
   },
   "showcase": {
     "formula1": "Formula 1",
     "football": "Calcio",
     "basketball": "Basket",
     "cars": "Auto",
-    "movies": "Film"
+    "movies": "Film",
+    "previousSlide": "Diapositiva precedente",
+    "nextSlide": "Diapositiva successiva",
+    "slideIndicators": "Indicatori diapositiva"
   },
   "cart": {
     "freeShipping": "Spedizione Gratuita!",
@@ -60,6 +65,11 @@
     "title": "Il tuo carrello",
     "backToProducts": "Torna ai prodotti",
     "clearCart": "Svuota carrello",
+    "clearCartTitle": "Svuotare il carrello?",
+    "clearCartConfirm": "Questo rimuoverà tutti gli articoli dal carrello. Questa azione non può essere annullata.",
+    "removeItem": "Rimuovi",
+    "removeItemTitle": "Rimuovere l'articolo?",
+    "removeItemConfirm": "Sei sicuro di voler rimuovere questo articolo dal carrello?",
     "summary": "Riepilogo",
     "subtotal": "Subtotale",
     "shipping": "Spedizione",
@@ -83,8 +93,11 @@
     "namePlaceholder": "Nome Cognome",
     "emailError": "Email non valida",
     "email": "Email",
+    "nameRequired": "Il nome completo è obbligatorio",
+    "addressRequired": "L'indirizzo è obbligatorio",
     "phoneError": "Numero di telefono non valido per l'Albania. Esempio: 0691234567 o +355691234567",
     "phoneRequired": "Il numero di telefono è obbligatorio",
+    "phoneHint": "Formato: 0691234567 o +355691234567",
     "phone": "Numero di telefono",
     "addressSection": "Indirizzo",
     "addressStreet": "Indirizzo / Via",
@@ -146,6 +159,7 @@
     "shippingCost": "Costo spedizione:",
     "freeShipping": "Gratuita per ordini superiori a 1.500 ALL.",
     "similarProducts": "Prodotti simili",
+    "noRelatedProducts": "Nessun prodotto correlato trovato.",
     "addedToCart": "Prodotto aggiunto al carrello",
     "configurePoster": "Configura il poster prima di aggiungerlo al carrello",
     "selectOption": "Seleziona una delle opzioni",
@@ -191,7 +205,10 @@
     "sortChip": "Ordine: {{option}}",
     "categoryLabel": "Categoria: {{name}}",
     "productType": "Tipo di Prodotto",
-    "noResultsSearch": "Prodotto non trovato, prova a cercare diversamente"
+    "noResultsSearch": "Prodotto non trovato, prova a cercare diversamente",
+    "noResultsFound": "Nessun risultato trovato",
+    "tryRemovingFilters": "Prova a rimuovere i filtri",
+    "removeFilters": "Rimuovi filtri"
   },
   "modal": {
     "successTitle": "Grazie per il tuo acquisto!",
@@ -230,6 +247,7 @@
     "Futboll": "Calcio",
     "Pista": "Pista",
     "Poster Helmete": "Poster Casco",
+    "Poster": "Poster",
     "Kapele": "Cappelli",
     "Aksesore": "Accessori"
   }

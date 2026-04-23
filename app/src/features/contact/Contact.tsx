@@ -207,19 +207,15 @@ const Contact = () => {
 
             <Button
               variant="contained"
+              color="primary"
               type="submit"
               size="large"
               sx={{
-                background: "linear-gradient(90deg, #e10600, #ff5f52)",
-                color: "white",
                 fontWeight: 700,
                 borderRadius: 3,
                 letterSpacing: ".04em",
                 py: 1.4,
                 textTransform: "none",
-                "&:hover": {
-                  background: "linear-gradient(90deg, #ff5f52, #e10600)",
-                },
               }}
             >
               {t("contact.sendMessage")}

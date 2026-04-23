@@ -116,7 +116,7 @@ const SearchProducts = ({
       zIndex={1200}
       sx={{
         position: "absolute", // or "fixed" depending on your layout
-        top: "100%", // if you’re rendering below an input field
+        top: "100%", // if you're rendering below an input field
         left: 0,
         right: 0,
         bgcolor: "background.paper", // make sure it has a solid background

@@ -47,14 +47,19 @@ const MobileDrawer = ({
   };
 
   return (
-    <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer}>
+    <Drawer
+      anchor="left"
+      open={drawerOpen}
+      onClose={toggleDrawer}
+      PaperProps={{ sx: { overflowY: "hidden" } }}
+    >
       <Box
         sx={{
           width: 250,
           justifyContent: "space-between",
           backgroundColor: "#ffffff",
           color: "#000000",
-          height: "100vh",
+          height: "100dvh",
           position: "relative",
         }}
       >
@@ -98,7 +103,7 @@ const MobileDrawer = ({
             display: "flex",
             justifyContent: "space-between",
             flexDirection: "column",
-            height: "calc(100vh - 80px)",
+            height: "calc(100dvh - 80px)",
             p: 0,
           }}
         >
@@ -207,14 +212,12 @@ const MobileDrawer = ({
             </ListItem>
 
             <Divider sx={{ mt: 2, borderColor: "#e0e0e0" }} />
-
-            {/* Language switcher in mobile drawer */}
-            <ListItem sx={{ px: 2, py: 1 }}>
-              <LanguageSwitcher variant="footer" />
-            </ListItem>
           </Box>
 
           <Stack sx={{ p: 2 }}>
+            <Box sx={{ px: 1, pb: 1 }}>
+              <LanguageSwitcher variant="footer" />
+            </Box>
             <Stack
               direction="row"
               justifyContent={"space-evenly"}

@@ -23,6 +23,9 @@ import Container from "@mui/material/Container";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
+import Stepper from "@mui/material/Stepper";
+import Step from "@mui/material/Step";
+import StepLabel from "@mui/material/StepLabel";
 import { Autocomplete } from "@mui/material";
 import { albanianCities } from "./albanian-cities";
 
@@ -108,11 +111,25 @@ const CheckoutPage = () => {
   );
   const hasErrors = useMemo(() => Object.keys(errors).length > 0, [errors]);
 
+  const checkoutSteps = [
+    t("checkout.personalInfo"),
+    t("checkout.addressSection"),
+    t("checkout.orderSummary"),
+  ];
+
   return (
     <Container maxWidth="md" sx={{ py: 5 }}>
       <Typography variant="h4" gutterBottom>
         {t("checkout.title")}
       </Typography>
+
+      <Stepper sx={{ my: 3 }} alternativeLabel>
+        {checkoutSteps.map((label) => (
+          <Step key={label} active>
+            <StepLabel>{label}</StepLabel>
+          </Step>
+        ))}
+      </Stepper>
 
       <Box
         component="form"
@@ -130,7 +147,7 @@ const CheckoutPage = () => {
               name="name"
               control={control}
               rules={{
-                required: true,
+                required: t("checkout.nameRequired"),
                 pattern: {
                   value: /^[A-Za-zÀ-ž\s]+$/,
                   message: t("checkout.nameError"),
@@ -154,7 +171,7 @@ const CheckoutPage = () => {
               name="user_email"
               control={control}
               rules={{
-                required: true,
+                required: t("checkout.emailError"),
                 pattern: {
                   value: /^[^@\s]+@[^@\s]+\.[^@\s]+$/,
                   message: t("checkout.emailError"),
@@ -198,7 +215,7 @@ const CheckoutPage = () => {
                   required
                   placeholder="0691234567"
                   error={!!errors.phone}
-                  helperText={errors.phone?.message}
+                  helperText={errors.phone?.message ?? t("checkout.phoneHint")}
                   inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
                 />
               )}
@@ -216,7 +233,7 @@ const CheckoutPage = () => {
             <Controller
               name="address"
               control={control}
-              rules={{ required: true }}
+              rules={{ required: t("checkout.addressRequired") }}
               render={({ field }) => (
                 <TextField
                   {...field}
@@ -224,6 +241,7 @@ const CheckoutPage = () => {
                   fullWidth
                   required
                   error={!!errors.address}
+                  helperText={errors.address?.message}
                 />
               )}
             />

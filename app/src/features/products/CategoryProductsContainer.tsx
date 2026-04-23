@@ -371,7 +371,7 @@ const CategoryProductsContainer = ({
             {selectedProductTypes.map((type) => (
               <Chip
                 key={type}
-                label={t("products.typeChip", { type })}
+                label={t("products.typeChip", { type: t(`categoryMap.${type.charAt(0).toUpperCase() + type.slice(1)}`, { defaultValue: type }) })}
                 onDelete={() =>
                   setSelectedProductTypes((prev) =>
                     prev.filter((t) => t !== type)

@@ -23,14 +23,14 @@ const BrowseCategory = () => {
       path: "/f1",
       color: "#DC143C",
       image:
-        "https://vgtfcayksprxvzdcikrx.supabase.co/storage/v1/object/public/f1-images/Showcase/f1_category.jpg",
+        "https://vgtfcayksprxvzdcikrx.supabase.co/storage/v1/object/public/f1-images/Showcase/f1_browse_category.jpg",
     },
     {
       id: "football",
       path: "/futboll",
       color: "#000000",
       image:
-        "https://vgtfcayksprxvzdcikrx.supabase.co/storage/v1/object/public/f1-images/Showcase/football_category.jpg",
+        "https://vgtfcayksprxvzdcikrx.supabase.co/storage/v1/object/public/f1-images/Showcase/football_browse_category.jpg",
     },
     {
       id: "basketball",
@@ -51,7 +51,7 @@ const BrowseCategory = () => {
       path: "/filma",
       color: "#FFD700",
       image:
-        "https://vgtfcayksprxvzdcikrx.supabase.co/storage/v1/object/public/f1-images/Showcase/movies_category.jpg",
+        "https://vgtfcayksprxvzdcikrx.supabase.co/storage/v1/object/public/f1-images/Showcase/movie_browse_category.jpg",
     },
   ];
 
@@ -80,6 +80,9 @@ const BrowseCategory = () => {
             }}
           >
             <Box
+              component="button"
+              onClick={() => handleCategoryClick(category.path)}
+              aria-label={t(`categories.${category.id}.name`)}
               sx={{
                 flex: 1,
                 aspectRatio: "16 / 9",
@@ -95,22 +98,28 @@ const BrowseCategory = () => {
                 overflow: "hidden",
                 boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
                 width: { xs: "100%", md: "auto" },
-                opacity: 0.9,
+                opacity: { xs: 1, md: 0.97 },
                 transition: "all 0.3s ease",
-                "&:hover": {
-                  opacity: 1,
-                  boxShadow: "0 16px 48px rgba(0, 0, 0, 0.2)",
-                  transform: "scale(1.02)",
+                border: "none",
+                padding: 0,
+                cursor: "pointer",
+                "@media (hover: hover)": {
+                  "&:hover": {
+                    opacity: 1,
+                    boxShadow: "0 16px 48px rgba(0, 0, 0, 0.2)",
+                    transform: "translateY(-8px)",
+                  },
                 },
               }}
             >
               <img
                 src={category.image}
-                alt={t(`categories.${category.id}.name`)}
+                alt=""
+                aria-hidden="true"
                 style={{
                   width: "100%",
                   height: "100%",
-                  objectFit: "contain",
+                  objectFit: "cover",
                 }}
               />
             </Box>

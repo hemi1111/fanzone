@@ -1,10 +1,13 @@
 import { useMemo, type FC } from "react";
+import { useTranslation } from "react-i18next";
 
-import CircularProgress from "@mui/material/CircularProgress";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import Skeleton from "@mui/material/Skeleton";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
 
 import ProductCard from "../../components/ProductCard";
 import LoadMoreButton from "./LoadMoreButton";
@@ -18,6 +21,7 @@ interface ProductsGridProps {
 }
 
 const ProductsGrid: FC<ProductsGridProps> = ({ params, clearFilters }) => {
+  const { t } = useTranslation();
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useGetProducts(params);
 
@@ -31,17 +35,20 @@ const ProductsGrid: FC<ProductsGridProps> = ({ params, clearFilters }) => {
 
   if (isLoading)
     return (
-      <div
-        style={{
-          justifyContent: "center",
-          alignContent: "center",
-          alignItems: "center",
-          height: "80vh",
-          display: "flex",
-        }}
-      >
-        <CircularProgress />
-      </div>
+      <Grid container spacing={3}>
+        {Array.from({ length: 8 }).map((_, i) => (
+          <Grid size={{ xs: 6, sm: 6, md: 4, lg: 3 }} key={i}>
+            <Card sx={{ height: "100%" }}>
+              <Skeleton variant="rectangular" height={220} />
+              <CardContent>
+                <Skeleton variant="text" width="60%" sx={{ mb: 0.5 }} />
+                <Skeleton variant="text" width="90%" />
+                <Skeleton variant="text" width="40%" sx={{ mt: 1 }} />
+              </CardContent>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
     );
 
   return (
@@ -66,10 +73,10 @@ const ProductsGrid: FC<ProductsGridProps> = ({ params, clearFilters }) => {
       ) : (
         <Box sx={{ py: 8, textAlign: "center" }}>
           <Typography variant="h6" gutterBottom>
-            Rezultatet nuk u gjeten
+            {t("products.noResultsFound")}
           </Typography>
           <Typography variant="body1" color="text.secondary">
-            Provoni te fshini filtrat
+            {t("products.tryRemovingFilters")}
           </Typography>
           <Button
             variant="contained"
@@ -77,7 +84,7 @@ const ProductsGrid: FC<ProductsGridProps> = ({ params, clearFilters }) => {
             onClick={clearFilters}
             sx={{ mt: 2 }}
           >
-            Fshi filtrat
+            {t("products.removeFilters")}
           </Button>
         </Box>
       )}

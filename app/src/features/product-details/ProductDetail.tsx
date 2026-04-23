@@ -505,20 +505,16 @@ const ProductDetail = () => {
                   {/* Add to Cart Button */}
                   <Button
                     variant="contained"
+                    color="primary"
                     size="large"
                     onClick={handleAddToCart}
                     sx={{
-                      backgroundColor: "#10ABAE",
-                      color: "white",
                       py: 1.5,
                       px: 3,
                       flex: 1,
                       textTransform: "uppercase",
                       fontWeight: "bold",
                       fontSize: "0.9rem",
-                      "&:hover": {
-                        backgroundColor: "#00796b",
-                      },
                     }}
                   >
                     {t("product.addToCart")}

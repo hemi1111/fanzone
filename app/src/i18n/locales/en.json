@@ -40,14 +40,19 @@
     }
   },
   "home": {
-    "browseCollection": "Browse Collection"
+    "browseCollection": "Browse Collection",
+    "ourProducts": "Our Products",
+    "ourProductsSubtitle": "Discover our exclusive collection of products"
   },
   "showcase": {
     "formula1": "Formula 1",
     "football": "Football",
     "basketball": "Basketball",
     "cars": "Cars",
-    "movies": "Movies"
+    "movies": "Movies",
+    "previousSlide": "Previous slide",
+    "nextSlide": "Next slide",
+    "slideIndicators": "Slide indicators"
   },
   "cart": {
     "freeShipping": "Free Shipping!",
@@ -60,6 +65,11 @@
     "title": "Your cart",
     "backToProducts": "Back to products",
     "clearCart": "Clear cart",
+    "clearCartTitle": "Clear cart?",
+    "clearCartConfirm": "This will remove all items from your cart. This action cannot be undone.",
+    "removeItem": "Remove",
+    "removeItemTitle": "Remove item?",
+    "removeItemConfirm": "Are you sure you want to remove this item from your cart?",
     "summary": "Summary",
     "subtotal": "Subtotal",
     "shipping": "Shipping",
@@ -85,7 +95,10 @@
     "email": "Email",
     "phoneError": "Invalid phone number for Albania. Example: 0691234567 or +355691234567",
     "phoneRequired": "Phone number is required",
+    "phoneHint": "Format: 0691234567 or +355691234567",
     "phone": "Phone number",
+    "nameRequired": "Full name is required",
+    "addressRequired": "Address is required",
     "addressSection": "Address",
     "addressStreet": "Address / Street",
     "cityRequired": "Select a city",
@@ -146,6 +159,7 @@
     "shippingCost": "Shipping cost:",
     "freeShipping": "Free for orders over 1,500 ALL.",
     "similarProducts": "Similar products",
+    "noRelatedProducts": "No related products found.",
     "addedToCart": "Product added to cart",
     "configurePoster": "Please configure the poster before adding to cart",
     "selectOption": "Please select one of the options",
@@ -191,7 +205,10 @@
     "sortChip": "Sort: {{option}}",
     "categoryLabel": "Category: {{name}}",
     "productType": "Product Type",
-    "noResultsSearch": "Product not found, try a different search"
+    "noResultsSearch": "Product not found, try a different search",
+    "noResultsFound": "No results found",
+    "tryRemovingFilters": "Try removing the filters",
+    "removeFilters": "Remove filters"
   },
   "modal": {
     "successTitle": "Thank you for your purchase!",
@@ -230,6 +247,7 @@
     "Futboll": "Football",
     "Pista": "Track",
     "Poster Helmete": "Helmet Posters",
+    "Poster": "Poster",
     "Kapele": "Hats",
     "Aksesore": "Accessories"
   }

@@ -26,7 +26,7 @@ const showcaseItems = [
     key: "basketball",
     link: "basketball",
     background:
-      "https://vgtfcayksprxvzdcikrx.supabase.co/storage/v1/object/public/f1-images/Showcase/basketball_category.jpg",
+      "https://vgtfcayksprxvzdcikrx.supabase.co/storage/v1/object/public/f1-images/Showcase/basketball_slider.jpg",
   },
   {
     key: "cars",
@@ -81,7 +81,7 @@ const Showcase = () => {
       sx={{
         position: "relative",
         width: "100%",
-        height: { xs: 280, sm: 380, md: 500, lg: 600 },
+        height: { xs: 350, sm: 380, md: 500, lg: 600 },
         mb: 4,
         overflow: "hidden",
         cursor: "pointer",
@@ -166,6 +166,7 @@ const Showcase = () => {
           e.stopPropagation();
           handlePrevious();
         }}
+        aria-label={t("showcase.previousSlide")}
         sx={{
           position: "absolute",
           left: 16,
@@ -189,6 +190,7 @@ const Showcase = () => {
           e.stopPropagation();
           handleNext();
         }}
+        aria-label={t("showcase.nextSlide")}
         sx={{
           position: "absolute",
           right: 16,
@@ -208,6 +210,8 @@ const Showcase = () => {
 
       {/* Dots Indicator */}
       <Box
+        role="tablist"
+        aria-label={t("showcase.slideIndicators")}
         sx={{
           position: "absolute",
           bottom: 20,
@@ -218,12 +222,22 @@ const Showcase = () => {
           zIndex: 2,
         }}
       >
-        {showcaseItems.map((_, index) => (
+        {showcaseItems.map((slideItem, index) => (
           <Box
             key={index}
+            role="tab"
+            tabIndex={0}
+            aria-selected={index === currentIndex}
+            aria-label={t(`showcase.${slideItem.key}`)}
             onClick={(e) => {
               e.stopPropagation();
               setCurrentIndex(index);
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.stopPropagation();
+                setCurrentIndex(index);
+              }
             }}
             sx={{
               width: 12,

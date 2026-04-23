@@ -40,14 +40,19 @@
     }
   },
   "home": {
-    "browseCollection": "Shfleto Koleksionin"
+    "browseCollection": "Shfleto Koleksionin",
+    "ourProducts": "Produktet Tona",
+    "ourProductsSubtitle": "Zbuloni koleksionin tonë të produkteve ekskluzive"
   },
   "showcase": {
     "formula1": "Formula 1",
     "football": "Futboll",
     "basketball": "Basketboll",
     "cars": "Makina",
-    "movies": "Filma"
+    "movies": "Filma",
+    "previousSlide": "Sllajdi i mëparshëm",
+    "nextSlide": "Sllajdi tjetër",
+    "slideIndicators": "Treguesit e sllajdeve"
   },
   "cart": {
     "freeShipping": "Transport Falas!",
@@ -60,6 +65,11 @@
     "title": "Shporta juaj",
     "backToProducts": "Kthehu te produktet",
     "clearCart": "Fshi shportën",
+    "clearCartTitle": "Fshi shportën?",
+    "clearCartConfirm": "Kjo do të heqë të gjitha artikujt nga shporta juaj. Ky veprim nuk mund të zhbëhet.",
+    "removeItem": "Hiq",
+    "removeItemTitle": "Hiq artikullin?",
+    "removeItemConfirm": "Jeni i sigurt që dëshironi të hiqni këtë artikull nga shporta?",
     "summary": "Përmbledhje",
     "subtotal": "Nëntotal",
     "shipping": "Transporti",
@@ -83,8 +93,11 @@
     "namePlaceholder": "Emri Mbiemri",
     "emailError": "Email i pavlefshëm",
     "email": "Email",
+    "nameRequired": "Emri i plotë është i detyrueshëm",
+    "addressRequired": "Adresa është e detyrueshme",
     "phoneError": "Numër telefoni i pavlefshëm për Shqipëri. Shembull: 0691234567 ose +355691234567",
     "phoneRequired": "Numri i telefonit është i detyrueshëm",
+    "phoneHint": "Formati: 0691234567 ose +355691234567",
     "phone": "Numri i telefonit",
     "addressSection": "Adresa",
     "addressStreet": "Adresa / Rruga",
@@ -146,6 +159,7 @@
     "shippingCost": "Kosto transporti:",
     "freeShipping": "Falas për porositë mbi 1.500 ALL.",
     "similarProducts": "Produkte të ngjashme",
+    "noRelatedProducts": "Nuk u gjetën produkte të ngjashme.",
     "addedToCart": "Produkti u shtua në shportë",
     "configurePoster": "Ju lutem konfigurojeni posterin para se ta shtoni në shportë",
     "selectOption": "Ju lutem zgjidhni një nga opsionet",
@@ -191,7 +205,10 @@
     "sortChip": "Renditja: {{option}}",
     "categoryLabel": "Kategoria: {{name}}",
     "productType": "Lloji i Produktit",
-    "noResultsSearch": "Produkti nuk u gjet, kerkoni ndryshe"
+    "noResultsSearch": "Produkti nuk u gjet, kerkoni ndryshe",
+    "noResultsFound": "Rezultatet nuk u gjeten",
+    "tryRemovingFilters": "Provoni te fshini filtrat",
+    "removeFilters": "Fshi filtrat"
   },
   "modal": {
     "successTitle": "Faleminderit për blerjen tuaj!",
@@ -230,6 +247,7 @@
     "Futboll": "Futboll",
     "Pista": "Pista",
     "Poster Helmete": "Poster Helmete",
+    "Poster": "Poster",
     "Kapele": "Kapele",
     "Aksesore": "Aksesore"
   }
