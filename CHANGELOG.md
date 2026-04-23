@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.2.0] - 2026-04-24
+
+### Added
+
+- Internationalization (i18n) support via `react-i18next` across all components.
+- Localized product and category descriptions.
+- Language switcher with country flag icons.
+
+### Changed
+
+- Enhanced accessibility across the app (ARIA labels, keyboard navigation, semantic HTML).
+- Improved overall UI/UX with visual and interaction refinements.
+
+---
+
 ## [1.1.0] - 2026-02-23
 
 ### Added
