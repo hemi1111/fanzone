@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next";
+
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
@@ -11,7 +13,12 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTiktok } from "@fortawesome/free-brands-svg-icons";
 
+import LanguageSwitcher from "./LanguageSwitcher";
+
 const Footer = () => {
+  const { t } = useTranslation();
+  const year = new Date().getFullYear();
+
   return (
     <Box
       id="footer"
@@ -29,8 +36,7 @@ const Footer = () => {
               Fan Zone
             </Typography>
             <Typography variant="body2" sx={{ mb: 2 }}>
-              Destinacioni juaj kryesor për produkte dhe postera te sporteve te
-              ndryshme
+              {t("footer.tagline")}
             </Typography>
             <Box sx={{ display: "flex", gap: 1 }}>
               <IconButton
@@ -65,9 +71,10 @@ const Footer = () => {
               </IconButton>
             </Box>
           </Grid>
+
           <Grid size={{ xs: 12, sm: 4 }}>
             <Typography variant="h6" gutterBottom sx={{ fontWeight: "bold" }}>
-              Shfletoni
+              {t("footer.browse")}
             </Typography>
             <Grid container spacing={2}>
               <Grid size={{ xs: 12, sm: 6 }}>
@@ -81,7 +88,7 @@ const Footer = () => {
                     "&:hover": { color: "lightblue" },
                   }}
                 >
-                  Kryefaqja
+                  {t("nav.home")}
                 </Link>
                 <Link
                   href="/f1"
@@ -93,7 +100,7 @@ const Footer = () => {
                     "&:hover": { color: "lightblue" },
                   }}
                 >
-                  F1
+                  {t("nav.f1")}
                 </Link>
                 <Link
                   href="/futboll"
@@ -105,7 +112,7 @@ const Footer = () => {
                     "&:hover": { color: "lightblue" },
                   }}
                 >
-                  Futboll
+                  {t("nav.football")}
                 </Link>
               </Grid>
               <Grid size={{ xs: 12, sm: 6 }}>
@@ -119,7 +126,7 @@ const Footer = () => {
                     "&:hover": { color: "lightblue" },
                   }}
                 >
-                  Basketboll
+                  {t("nav.basketball")}
                 </Link>
                 <Link
                   href="/makina"
@@ -131,7 +138,7 @@ const Footer = () => {
                     "&:hover": { color: "lightblue" },
                   }}
                 >
-                  Makina
+                  {t("nav.cars")}
                 </Link>
                 <Link
                   href="/filma"
@@ -143,20 +150,21 @@ const Footer = () => {
                     "&:hover": { color: "lightblue" },
                   }}
                 >
-                  Filma
+                  {t("nav.movies")}
                 </Link>
               </Grid>
             </Grid>
           </Grid>
+
           <Grid size={{ xs: 12, sm: 4 }}>
             <Typography variant="h6" gutterBottom sx={{ fontWeight: "bold" }}>
-              Kontakt
+              {t("footer.contact")}
             </Typography>
             <Typography variant="body2" sx={{ mb: 1 }}>
               Email: fanzone@gmail.com
             </Typography>
             <Typography variant="body2" sx={{ mb: 1 }}>
-              Tiranë, Shqipëri
+              {t("footer.location")}
             </Typography>
             <Link
               href="/contact-us"
@@ -164,17 +172,19 @@ const Footer = () => {
               fontSize={"14px"}
               sx={{
                 display: "block",
-                mb: 1,
+                mb: 2,
                 "&:hover": { color: "lightblue" },
               }}
             >
-              Na kontaktoni
+              {t("footer.contactUs")}
             </Link>
+            <LanguageSwitcher variant="footer" />
           </Grid>
         </Grid>
+
         <Divider sx={{ my: 3, bgcolor: "rgba(255,255,255,0.1)" }} />
         <Typography variant="body2" align="center" sx={{ pt: 2 }}>
-          {`© ${new Date().getFullYear()} Fan Zone`}
+          {t("footer.copyright", { year })}
         </Typography>
       </Container>
     </Box>

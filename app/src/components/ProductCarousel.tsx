@@ -1,9 +1,11 @@
 import { useEffect, useState, useCallback } from "react";
 import { useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { useGetRelatedProducts } from "../hooks/useGetRelatedProducts";
 
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import ArrowBackIos from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIos from "@mui/icons-material/ArrowForwardIos";
@@ -26,6 +28,7 @@ const ProductCarousel = ({
   product_category?: string;
 }) => {
   const { id } = useParams();
+  const { t } = useTranslation();
   const { data: relatedProducts, isLoading: isLoadingRelatedProducts } =
     useGetRelatedProducts(product_category, id ?? "");
 
@@ -101,7 +104,13 @@ const ProductCarousel = ({
   }
 
   if (!items || items.length === 0) {
-    return null;
+    return (
+      <Box sx={{ py: 4, textAlign: "center" }}>
+        <Typography variant="body1" color="text.secondary">
+          {t("product.noRelatedProducts")}
+        </Typography>
+      </Box>
+    );
   }
 
   return (

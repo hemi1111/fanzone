@@ -1,4 +1,5 @@
 import { useMemo, useState, useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
@@ -26,8 +27,18 @@ import SortIcon from "@mui/icons-material/Sort";
 import { useShop } from "../../contexts/ShopContext";
 import ProductsGrid from "./ProductsGrid";
 import PriceFilter from "../../components/PriceFilter";
+import { translateCategory } from "../../utils/translateCategory";
+
+const FILTER_CATEGORIES = [
+  "Makina",
+  "Pista",
+  "Poster Helmete",
+  "Kapele",
+  "Aksesore",
+];
 
 const Products = () => {
+  const { t } = useTranslation();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -60,15 +71,6 @@ const Products = () => {
       sortOption,
     ]
   );
-
-  // Get unique categories
-  const categories = [
-    "Makina",
-    "Pista",
-    "Poster Helmete",
-    "Kapele",
-    "Aksesore",
-  ];
 
   const handleCategoryToggle = (category: any) => {
     setSelectedCategories((prev: any) => {
@@ -127,7 +129,7 @@ const Products = () => {
         }}
       >
         <Typography variant="h5" fontWeight="bold">
-          Filtrat
+          {t("products.filters")}
         </Typography>
         {isMobile && (
           <IconButton onClick={toggleDrawer(false)}>
@@ -139,10 +141,10 @@ const Products = () => {
       <Divider sx={{ mb: 2 }} />
 
       <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-        Kategoritë
+        {t("products.categories")}
       </Typography>
       <List>
-        {categories.map((category) => (
+        {FILTER_CATEGORIES.map((category) => (
           <ListItem key={category} disablePadding>
             <ListItemButton
               dense
@@ -154,7 +156,7 @@ const Products = () => {
                 tabIndex={-1}
                 disableRipple
               />
-              <ListItemText primary={category} />
+              <ListItemText primary={translateCategory(t, category)} />
             </ListItemButton>
           </ListItem>
         ))}
@@ -163,7 +165,7 @@ const Products = () => {
       <Divider sx={{ my: 2 }} />
 
       <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-        Çmimi
+        {t("products.price")}
       </Typography>
       <Box sx={{ mr: 2, mt: 2 }}>
         <PriceFilter
@@ -184,7 +186,7 @@ const Products = () => {
             onChange={(e) => setShowDiscountedOnly(e.target.checked)}
           />
         }
-        label="Produktet në Zbritje"
+        label={t("products.discountedOnly")}
       />
 
       <Button
@@ -194,7 +196,7 @@ const Products = () => {
         onClick={clearFilters}
         sx={{ mt: 2 }}
       >
-        Fshi filtrat
+        {t("products.clearFilters")}
       </Button>
     </Box>
   );
@@ -217,7 +219,7 @@ const Products = () => {
                 startIcon={<FilterListIcon />}
                 onClick={toggleDrawer(true)}
               >
-                Filtrat
+                {t("products.filters")}
               </Button>
             )}
 
@@ -241,7 +243,7 @@ const Products = () => {
                     padding: "10px 14px",
                     whiteSpace: "nowrap",
                     overflow: "hidden",
-                    textOverflow: "ellipsis", // truncate long text
+                    textOverflow: "ellipsis",
                   },
                   borderRadius: "12px",
                   "& .MuiOutlinedInput-root": {
@@ -264,11 +266,11 @@ const Products = () => {
                   },
                 }}
               >
-                <MenuItem value="default">Parazgjedhje</MenuItem>
-                <MenuItem value="price-low">Çmimi në rritje ↑</MenuItem>
-                <MenuItem value="price-high">Çmimi në zbritje ↓</MenuItem>
-                <MenuItem value="name-asc">Emri : A-Z</MenuItem>
-                <MenuItem value="name-desc">Emri : Z-A</MenuItem>
+                <MenuItem value="default">{t("products.sortDefault")}</MenuItem>
+                <MenuItem value="price-low">{t("products.sortPriceLow")}</MenuItem>
+                <MenuItem value="price-high">{t("products.sortPriceHigh")}</MenuItem>
+                <MenuItem value="name-asc">{t("products.sortNameAsc")}</MenuItem>
+                <MenuItem value="name-desc">{t("products.sortNameDesc")}</MenuItem>
               </TextField>
             </Box>
           </Box>
@@ -292,13 +294,13 @@ const Products = () => {
               variant="body2"
               sx={{ mr: 1, display: "flex", alignItems: "center" }}
             >
-              Filtrat e aplikuar:
+              {t("products.appliedFilters")}
             </Typography>
 
             {selectedCategories.map((category: any) => (
               <Chip
                 key={category}
-                label={category}
+                label={translateCategory(t, category)}
                 onDelete={() => handleCategoryToggle(category)}
                 size="small"
               />
@@ -306,7 +308,7 @@ const Products = () => {
 
             {showDiscountedOnly && (
               <Chip
-                label="Produktet në Zbritje"
+                label={t("products.discountedOnly")}
                 onDelete={() => setShowDiscountedOnly(false)}
                 size="small"
               />
@@ -326,7 +328,7 @@ const Products = () => {
               onClick={clearFilters}
               sx={{ ml: "auto" }}
             >
-              Fshi filtrat
+              {t("products.clearFilters")}
             </Button>
           </Box>
         )}
@@ -340,7 +342,7 @@ const Products = () => {
           {/* Products grid */}
           <Grid size={{ xs: 12, md: 9, lg: 10 }}>
             <Typography variant="h4" sx={{ mb: 1 }}>
-              Produktet
+              {t("products.title")}
             </Typography>
             <ProductsGrid params={params} clearFilters={clearFilters} />
           </Grid>

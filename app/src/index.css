@@ -1,5 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Oswald:wght@400;500;600;700&display=swap");
 
+:root {
+  color-scheme: light;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -43,4 +47,23 @@ body {
 .footer-social-icon:hover {
   transform: scale(1.2);
   transition: transform 0.3s ease;
+}
+
+.skip-to-main {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  z-index: 9999;
+  padding: 12px 24px;
+  background: #000000;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  border-radius: 0 0 8px 0;
+  transition: top 0.2s ease;
+}
+
+.skip-to-main:focus {
+  top: 0;
 }

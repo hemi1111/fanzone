@@ -1,4 +1,5 @@
 import type { Dispatch, SetStateAction } from "react";
+import { useTranslation } from "react-i18next";
 
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
@@ -23,6 +24,7 @@ import CategoryIcon from "@mui/icons-material/Category";
 
 import { Link as RouterLink, useNavigate, useLocation } from "react-router-dom";
 import Logo from "./Logo";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 interface MobileDrawerProps {
   drawerOpen: boolean;
@@ -35,6 +37,7 @@ const MobileDrawer = ({
   toggleDrawer,
   pages,
 }: MobileDrawerProps) => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -44,14 +47,19 @@ const MobileDrawer = ({
   };
 
   return (
-    <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer}>
+    <Drawer
+      anchor="left"
+      open={drawerOpen}
+      onClose={toggleDrawer}
+      PaperProps={{ sx: { overflowY: "hidden" } }}
+    >
       <Box
         sx={{
           width: 250,
           justifyContent: "space-between",
           backgroundColor: "#ffffff",
           color: "#000000",
-          height: "100vh",
+          height: "100dvh",
           position: "relative",
         }}
       >
@@ -95,13 +103,13 @@ const MobileDrawer = ({
             display: "flex",
             justifyContent: "space-between",
             flexDirection: "column",
-            height: "calc(100vh - 80px)",
+            height: "calc(100dvh - 80px)",
             p: 0,
           }}
         >
           <Box>
             {pages.map((page: any) => (
-              <ListItem key={page.name} disablePadding>
+              <ListItem key={page.path} disablePadding>
                 <ListItemButton
                   onClick={() => {
                     toggleDrawer(false);
@@ -164,7 +172,7 @@ const MobileDrawer = ({
                   <ShoppingCartIcon />
                 </ListItemIcon>
                 <ListItemText
-                  primary={"Shporta"}
+                  primary={t("nav.cart")}
                   sx={{
                     "& .MuiTypography-root": {
                       fontWeight: 500,
@@ -205,7 +213,11 @@ const MobileDrawer = ({
 
             <Divider sx={{ mt: 2, borderColor: "#e0e0e0" }} />
           </Box>
+
           <Stack sx={{ p: 2 }}>
+            <Box sx={{ px: 1, pb: 1 }}>
+              <LanguageSwitcher variant="footer" />
+            </Box>
             <Stack
               direction="row"
               justifyContent={"space-evenly"}

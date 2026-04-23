@@ -2,11 +2,13 @@ import { useMemo } from "react";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
+import { useTranslation } from "react-i18next";
 
 import { useShop } from "../../contexts/ShopContext";
 import ProductsGrid from "./ProductsGrid";
 
 const HomeProductsContainer = () => {
+  const { t } = useTranslation();
   const { searchQuery }: any = useShop();
 
   // Simple params for home page - no filters, just search and basic sorting
@@ -32,7 +34,7 @@ const HomeProductsContainer = () => {
             mb: 2,
           }}
         >
-          Produktet Tona
+          {t("home.ourProducts")}
         </Typography>
         <Typography
           variant="h6"
@@ -43,7 +45,7 @@ const HomeProductsContainer = () => {
             mx: "auto",
           }}
         >
-          Zbuloni koleksionin tonë të produkteve ekskluzive
+          {t("home.ourProductsSubtitle")}
         </Typography>
       </Box>
 

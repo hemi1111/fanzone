@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -13,24 +14,32 @@ const ProductAttributes = ({
   selected,
   setSelected,
 }: ProductAttributesProps) => {
-  // Grab first attribute key, e.g. "sizes", "colors", "dimensions"
+  const { t } = useTranslation();
+
   const attributeKey = Object.keys(attributes)[0];
   const attributeValue = attributes[attributeKey];
-
   const isArray = Array.isArray(attributeValue);
 
-  // Get attribute display name
   const getAttributeDisplayName = (key: string) => {
     switch (key) {
       case "sizes":
-        return "MADHËSIA";
+        return t("product.sizeLabel").toUpperCase();
       case "colors":
-        return "NGJYRA";
+        return t("product.colorLabel").toUpperCase();
       case "dimensions":
-        return "PËRMASAT";
+        return t("product.dimensionsLabel").toUpperCase();
       default:
         return key.toUpperCase();
     }
+  };
+
+  const getColorLabel = (color: string) =>
+    t(`colorMap.${color.toLowerCase()}`, { defaultValue: color });
+
+  const getSelectedDisplay = () => {
+    if (!selected) return null;
+    if (attributeKey === "colors") return getColorLabel(selected);
+    return isArray ? selected : selected.split(" - ")[0];
   };
 
   return (
@@ -43,15 +52,14 @@ const ProductAttributes = ({
         {getAttributeDisplayName(attributeKey)}:
         {selected && (
           <Box component="span" sx={{ textTransform: "uppercase", ml: 0.5 }}>
-            {isArray ? selected : selected.split(" - ")[0]}
+            {getSelectedDisplay()}
           </Box>
         )}
       </Typography>
 
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
         {isArray
-          ? // If array (e.g. sizes or colors), map values directly
-            attributeValue.map((value: string) => (
+          ? attributeValue.map((value: string) => (
               <Button
                 key={value}
                 variant={selected === value ? "contained" : "outlined"}
@@ -71,11 +79,10 @@ const ProductAttributes = ({
                   },
                 }}
               >
-                {value}
+                {attributeKey === "colors" ? getColorLabel(value) : value}
               </Button>
             ))
-          : // If object (e.g. dimensions), map entries and display key and price
-            Object.entries(attributeValue).map(([key, price]) => (
+          : Object.entries(attributeValue).map(([key, price]) => (
               <Button
                 key={key}
                 variant={selected === key ? "contained" : "outlined"}

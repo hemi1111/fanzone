@@ -23,10 +23,13 @@ const App = () => {
   return (
     <CartProvider>
       <ScrollToTop />
+      <a href="#main-content" className="skip-to-main">
+        Skip to main content
+      </a>
       <Box
         sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
       >
-        <Box sx={{ flexGrow: 1 }}>
+        <Box id="main-content" sx={{ flexGrow: 1 }}>
           <Suspense fallback={null}>
             <Routes>
               <Route path="/" element={<OutletPage />}>

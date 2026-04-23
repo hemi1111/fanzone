@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
+
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
@@ -25,23 +27,6 @@ import { faTiktok } from "@fortawesome/free-brands-svg-icons";
 import { sendMail } from "../../hooks/useSendContactMessage";
 import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
 
-const faqs = [
-  {
-    question: "Si mund të porosis?",
-    answer:
-      "Zgjidh një ose disa nga produktet, shtoji në shportë ose kliko 'Bli Tani', dhe plotëso formularin me të dhënat mbi dërgesën. Në përfundim të porosisë do ju vijë një email konfirmimi.",
-  },
-  {
-    question: "Sa kushton transporti?",
-    answer:
-      "Transporti është falas për porosite mbi 1.500 lekë, ndërsa për porositë nën këtë shumë, transporti kushton 200 lekë.",
-  },
-  {
-    question: "Sa vonon dërgesa?",
-    answer: "Dërgesa arrin brenda 1-3 ditëve pune pas konfirmimit të porosisë.",
-  },
-];
-
 type FormData = {
   name: string;
   email: string;
@@ -49,6 +34,7 @@ type FormData = {
 };
 
 const Contact = () => {
+  const { t } = useTranslation();
   const [submitted, setSubmitted] = useState(false);
 
   const {
@@ -63,6 +49,21 @@ const Contact = () => {
     setSubmitted(true);
     reset();
   };
+
+  const faqs = [
+    {
+      question: t("contact.faq.orderQuestion"),
+      answer: t("contact.faq.orderAnswer"),
+    },
+    {
+      question: t("contact.faq.shippingQuestion"),
+      answer: t("contact.faq.shippingAnswer"),
+    },
+    {
+      question: t("contact.faq.deliveryQuestion"),
+      answer: t("contact.faq.deliveryAnswer"),
+    },
+  ];
 
   return (
     <Box
@@ -95,11 +96,11 @@ const Contact = () => {
             letterSpacing: ".02em",
           }}
         >
-          Na kontaktoni
+          {t("contact.title")}
         </Typography>
 
         <Typography variant="body1" mb={3} color="text.secondary">
-          Për çdo pyetje, sugjerim ose kërkesë, jemi këtu për ju!
+          {t("contact.subtitle")}
         </Typography>
 
         <Stack direction="row" alignItems="center" spacing={1.5} mb={3}>
@@ -111,7 +112,7 @@ const Contact = () => {
 
         {submitted && (
           <Alert severity="success" sx={{ mb: 2, fontWeight: 500 }}>
-            Faleminderit për mesazhin tuaj! Do t'ju kontaktojmë së shpejti.
+            {t("contact.successMessage")}
           </Alert>
         )}
 
@@ -127,11 +128,11 @@ const Contact = () => {
               name="name"
               control={control}
               defaultValue=""
-              rules={{ required: "Emri është i detyrueshëm" }}
+              rules={{ required: t("contact.nameRequired") }}
               render={({ field }) => (
                 <TextField
                   {...field}
-                  label="Emri"
+                  label={t("contact.name")}
                   error={!!errors.name}
                   helperText={errors.name?.message}
                   fullWidth
@@ -152,16 +153,16 @@ const Contact = () => {
               control={control}
               defaultValue=""
               rules={{
-                required: "Email-i është i detyrueshëm",
+                required: t("contact.emailRequired"),
                 pattern: {
                   value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-                  message: "Shkruani një email të vlefshëm",
+                  message: t("contact.emailInvalid"),
                 },
               }}
               render={({ field }) => (
                 <TextField
                   {...field}
-                  label="Email"
+                  label={t("contact.email")}
                   type="email"
                   error={!!errors.email}
                   helperText={errors.email?.message}
@@ -182,11 +183,11 @@ const Contact = () => {
               name="message"
               control={control}
               defaultValue=""
-              rules={{ required: "Mesazhi është i detyrueshëm" }}
+              rules={{ required: t("contact.messageRequired") }}
               render={({ field }) => (
                 <TextField
                   {...field}
-                  label="Mesazhi"
+                  label={t("contact.message")}
                   multiline
                   rows={4}
                   error={!!errors.message}
@@ -206,22 +207,18 @@ const Contact = () => {
 
             <Button
               variant="contained"
+              color="primary"
               type="submit"
               size="large"
               sx={{
-                background: "linear-gradient(90deg, #e10600, #ff5f52)",
-                color: "white",
                 fontWeight: 700,
                 borderRadius: 3,
                 letterSpacing: ".04em",
                 py: 1.4,
                 textTransform: "none",
-                "&:hover": {
-                  background: "linear-gradient(90deg, #ff5f52, #e10600)",
-                },
               }}
             >
-              Dërgo Mesazhin
+              {t("contact.sendMessage")}
             </Button>
           </Stack>
         </Box>
@@ -229,7 +226,7 @@ const Contact = () => {
         {/* Social icons */}
         <Divider sx={{ my: 4 }} />
         <Typography variant="subtitle1" fontWeight={600} mb={2}>
-          Na ndiqni në rrjetet sociale:
+          {t("contact.followUs")}
         </Typography>
         <Stack direction="row" spacing={2}>
           <IconButton
@@ -275,7 +272,7 @@ const Contact = () => {
           gutterBottom
           sx={{ fontWeight: 700, color: "primary.main", mb: 2 }}
         >
-          Pyetjet më të shpeshta
+          {t("contact.faqTitle")}
         </Typography>
         {faqs.map((faq, idx) => (
           <Accordion key={idx} disableGutters>
@@ -305,13 +302,10 @@ const Contact = () => {
           gutterBottom
           sx={{ fontWeight: 700, color: "primary.main", mb: 2 }}
         >
-          Rreth Nesh
+          {t("contact.aboutTitle")}
         </Typography>
         <Typography variant="body1" color="text.secondary">
-          Mirësevini në Fan Zone! Për të gjithë të apasionuarit e sporteve, ne
-          ofrojmë një gamë të gjerë produktesh dhe koleksionesh. Qëllimi ynë
-          është të sjellim emocionin e sporteve në shtëpitë tuaja me produkte që
-          reflektojnë pasionin tonë për këtë sport.
+          {t("contact.aboutText")}
         </Typography>
       </Paper>
     </Box>

@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next";
+
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
@@ -7,6 +9,7 @@ import Stack from "@mui/material/Stack";
 
 import type { Product } from "../../../types/Product";
 import { buildAttributesText } from "../../cart/Cart";
+import { translateCategory } from "../../../utils/translateCategory";
 
 const CartSummary = ({
   item,
@@ -17,6 +20,8 @@ const CartSummary = ({
   buyNow?: boolean;
   quantity?: number;
 }) => {
+  const { t } = useTranslation();
+
   return (
     <Grid size={{ xs: 12, sm: 6, md: 4 }}>
       <Card
@@ -52,13 +57,14 @@ const CartSummary = ({
             {item.attributes &&
               buildAttributesText(
                 item.attribute,
-                item.product_type === "poster"
+                item.product_type === "poster",
+                t
               )}
           </Typography>
 
           <Chip
             size="small"
-            label={item.category}
+            label={translateCategory(t, item.category)}
             sx={{ alignSelf: "flex-start", fontSize: "0.75rem" }}
           />
 
@@ -95,7 +101,7 @@ const CartSummary = ({
             color="text.secondary"
             sx={{ fontStyle: "italic" }}
           >
-            Sasia: {buyNow ? quantity || 1 : item.quantity}
+            {t("cart.quantity", { count: buyNow ? quantity || 1 : item.quantity })}
           </Typography>
         </Stack>
       </Card>
