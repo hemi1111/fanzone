@@ -23,6 +23,12 @@ export class Product {
   @Column('text')
   description: string;
 
+  @Column({ type: 'text', nullable: true })
+  description_en: string;
+
+  @Column({ type: 'text', nullable: true })
+  description_it: string;
+
   @Column()
   category: string;
 

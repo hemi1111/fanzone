@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
@@ -23,6 +24,7 @@ import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 
 import { useShop } from "../../contexts/ShopContext";
 import { useGetProduct } from "../../hooks/useGetProduct";
+import { translateCategory } from "../../utils/translateCategory";
 
 import ProductImages from "./ProductImages";
 import ProductAttributes from "./ProductAttributes";
@@ -37,8 +39,8 @@ import { CATEGORY_CONFIGS } from "../../types/CategoryConfig";
 
 const ProductDetail = () => {
   const { id } = useParams();
-
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
 
   const { addToCart }: any = useShop();
 
@@ -54,12 +56,18 @@ const ProductDetail = () => {
     useState<PosterSelections | null>(null);
   const [quantity, setQuantity] = useState<number>(1);
 
+  const getLocalizedDescription = (p: typeof product) => {
+    if (!p) return "";
+    if (i18n.language === "en" && p.description_en) return p.description_en;
+    if (i18n.language === "it" && p.description_it) return p.description_it;
+    return p.description;
+  };
+
   const calculatePosterPrice = (
     basePrice: number,
     selections: PosterSelections,
     applyDiscount: boolean = false
   ) => {
-    // Get fixed price from product attributes
     if (product?.attributes?.poster_options?.pricing) {
       const pricing = product.attributes.poster_options.pricing;
       if (
@@ -68,7 +76,6 @@ const ProductDetail = () => {
       ) {
         let price = pricing[selections.size][selections.material];
 
-        // Apply discount if requested and discount_percentage exists
         if (
           applyDiscount &&
           product.discount &&
@@ -83,17 +90,14 @@ const ProductDetail = () => {
       }
     }
 
-    // Return base price if no pricing found (should not happen with fixed prices)
     return basePrice;
   };
 
   const handleAddToCart = () => {
     if (product) {
-      // Check if it's a poster product
       const isPoster =
         product.product_type === "poster" && product.attributes?.poster_options;
 
-      // Check if product has other attributes (sizes, colors, etc.)
       const hasAttributes =
         product.attributes &&
         (product.attributes.sizes ||
@@ -111,11 +115,10 @@ const ProductDetail = () => {
       }
 
       if (isPoster && posterSelections) {
-        // Handle poster customization
         const customizedPrice = calculatePosterPrice(
           product.price,
           posterSelections,
-          false // Original price
+          false
         );
         const customizedFinalPrice =
           product.product_type !== "poster"
@@ -123,7 +126,7 @@ const ProductDetail = () => {
             : calculatePosterPrice(
                 product.final_price,
                 posterSelections,
-                product.discount // Apply discount if product has discount flag
+                product.discount
               );
 
         const updatedProduct = {
@@ -136,14 +139,12 @@ const ProductDetail = () => {
 
         addToCart(updatedProduct, quantity);
       } else if (hasAttributes && selectedAttribute && product.attributes) {
-        // Handle products with attributes (t-shirts, etc.)
         const updatedProduct = {
           ...product,
           attribute: selectedAttribute,
         };
         addToCart(updatedProduct, quantity);
       } else {
-        // Handle simple products without attributes
         addToCart(product, quantity);
       }
       setOpenSnackbar(true);
@@ -181,7 +182,7 @@ const ProductDetail = () => {
           <Icon>
             <FontAwesomeIcon icon={faExclamationCircle} />
           </Icon>
-          <Typography variant="h5">Produkti nuk u gjet.</Typography>
+          <Typography variant="h5">{t("product.notFound")}</Typography>
         </Stack>
       </Container>
     );
@@ -198,11 +199,9 @@ const ProductDetail = () => {
       return;
     }
 
-    // Check if it's a poster product
     const isPoster =
       product.product_type === "poster" && product.attributes?.poster_options;
 
-    // Check if product has other attributes (sizes, colors, etc.)
     const hasAttributes =
       product.attributes &&
       (product.attributes.sizes ||
@@ -222,16 +221,15 @@ const ProductDetail = () => {
     let updatedProduct = product;
 
     if (isPoster && posterSelections) {
-      // Handle poster customization
       const customizedPrice = calculatePosterPrice(
         product.price,
         posterSelections,
-        false // Original price
+        false
       );
       const customizedFinalPrice = calculatePosterPrice(
         product.final_price,
         posterSelections,
-        product.discount // Apply discount if product has discount flag
+        product.discount
       );
 
       updatedProduct = {
@@ -242,7 +240,6 @@ const ProductDetail = () => {
         posterCustomization: posterSelections,
       } as any;
     } else if (hasAttributes && selectedAttribute && product.attributes) {
-      // Handle products with attributes (t-shirts, etc.)
       updatedProduct = {
         ...product,
         price: product.attributes.dimensions
@@ -278,7 +275,7 @@ const ProductDetail = () => {
           }
           sx={{ mb: 3 }}
         >
-          Produktet
+          {t("product.backToProducts")}
         </Button>
 
         <Grid container spacing={4}>
@@ -293,7 +290,7 @@ const ProductDetail = () => {
           <Grid size={{ xs: 12, md: 6 }}>
             <Box>
               <Typography variant="body1" color="text.secondary" gutterBottom>
-                {product.category}
+                {translateCategory(t, product.category)}
               </Typography>
 
               <Typography
@@ -308,8 +305,8 @@ const ProductDetail = () => {
 
               {/* Price Section */}
               {(product.product_type === "poster"
-                ? product.attributes?.poster_options // For posters, show if poster_options exist
-                : true) && ( // For non-posters, always show price
+                ? product.attributes?.poster_options
+                : true) && (
                 <Box sx={{ mb: 2 }}>
                   <Box
                     sx={{
@@ -320,7 +317,6 @@ const ProductDetail = () => {
                     }}
                   >
                     {product.product_type === "poster" ? (
-                      // Poster pricing logic with discount calculations
                       product.discount ? (
                         <>
                           <Typography
@@ -335,7 +331,7 @@ const ProductDetail = () => {
                               ? calculatePosterPrice(
                                   product.price,
                                   posterSelections,
-                                  false // Original price without discount
+                                  false
                                 )
                               : product.price}{" "}
                             ALL
@@ -346,18 +342,18 @@ const ProductDetail = () => {
                             fontWeight="bold"
                             sx={{ fontSize: "1.5rem" }}
                           >
-                            Cmimi:{" "}
+                            {t("product.price")}
                             {posterSelections
                               ? calculatePosterPrice(
                                   product.final_price,
                                   posterSelections,
-                                  true // Apply discount
+                                  true
                                 )
                               : product.final_price}{" "}
                             ALL
                           </Typography>
                           <Chip
-                            label="ZBRITJE"
+                            label={t("product.discountLabel")}
                             color="error"
                             size="small"
                             sx={{
@@ -377,14 +373,13 @@ const ProductDetail = () => {
                             ? calculatePosterPrice(
                                 product.price,
                                 posterSelections,
-                                false // No discount to apply
+                                false
                               )
                             : product.price}{" "}
                           ALL
                         </Typography>
                       )
-                    ) : // Non-poster pricing logic - simple final_price display
-                    product.discount ? (
+                    ) : product.discount ? (
                       <>
                         <Typography
                           variant="body1"
@@ -402,10 +397,11 @@ const ProductDetail = () => {
                           fontWeight="bold"
                           sx={{ fontSize: "1.5rem" }}
                         >
-                          Cmimi: {product.final_price} ALL
+                          {t("product.price")}
+                          {product.final_price} ALL
                         </Typography>
                         <Chip
-                          label="ZBRITJE"
+                          label={t("product.discountLabel")}
                           color="error"
                           size="small"
                           sx={{
@@ -430,7 +426,7 @@ const ProductDetail = () => {
 
               {/* Product Description */}
               <Typography variant="body1" paragraph sx={{ mb: 3 }}>
-                {product.description.split(".")[0]}
+                {getLocalizedDescription(product).split(".")[0]}
               </Typography>
 
               {/* Product Customization */}
@@ -451,7 +447,7 @@ const ProductDetail = () => {
                 />
               ) : null}
 
-              {/* Quantity Controls and Add to Cart - Same Row */}
+              {/* Quantity Controls and Add to Cart */}
               <Box sx={{ mb: 3 }}>
                 <Box
                   sx={{
@@ -506,26 +502,22 @@ const ProductDetail = () => {
                     </IconButton>
                   </Box>
 
-                  {/* Add to Cart Button - Same Row */}
+                  {/* Add to Cart Button */}
                   <Button
                     variant="contained"
+                    color="primary"
                     size="large"
                     onClick={handleAddToCart}
                     sx={{
-                      backgroundColor: "#10ABAE",
-                      color: "white",
                       py: 1.5,
                       px: 3,
                       flex: 1,
                       textTransform: "uppercase",
                       fontWeight: "bold",
                       fontSize: "0.9rem",
-                      "&:hover": {
-                        backgroundColor: "#00796b",
-                      },
                     }}
                   >
-                    SHTO NË SHPORTË
+                    {t("product.addToCart")}
                   </Button>
                 </Box>
 
@@ -548,7 +540,7 @@ const ProductDetail = () => {
                     },
                   }}
                 >
-                  BLEJ TANI
+                  {t("product.buyNow")}
                 </Button>
               </Box>
             </Box>
@@ -563,10 +555,10 @@ const ProductDetail = () => {
             variant="scrollable"
             scrollButtons="auto"
           >
-            <Tab label="Detajet" />
-            <Tab label="Informacion mbi dërgesën" />
+            <Tab label={t("product.details")} />
+            <Tab label={t("product.shippingInfo")} />
             {product.product_type === "poster" && (
-              <Tab label="Detajet e kornizes" />
+              <Tab label={t("product.frameDetails")} />
             )}
           </Tabs>
 
@@ -581,31 +573,29 @@ const ProductDetail = () => {
           >
             {tabValue === 0 && (
               <Stack>
-                <strong>{product.description.split(".")[0]}</strong>
+                <strong>{getLocalizedDescription(product).split(".")[0]}</strong>
                 <br />
-                <ProductDescription description={product.description} />
+                <ProductDescription description={getLocalizedDescription(product)} />
               </Stack>
             )}
 
             {tabValue === 1 && (
               <Typography variant="body1">
-                <strong>Dërgesa vetëm në Shqipëri</strong>
+                <strong>{t("product.shippingAlbania")}</strong>
                 <br />
-                Porosia juaj do të përpunohet shpejt dhe do të dorëzohet në
-                adresën tuaj me kujdes.
+                {t("product.shippingText")}
                 <br />
-                <strong>Koha e dorëzimit:</strong> 2–3 ditë pune
+                <strong>{t("product.deliveryTime")}</strong>{" "}
+                {t("product.deliveryDays")}
                 <br />
-                <strong>Kosto transporti:</strong> Falas për porositë mbi 1.500
-                ALL.
+                <strong>{t("product.shippingCost")}</strong>{" "}
+                {t("product.freeShipping")}
               </Typography>
             )}
 
             {tabValue === 2 &&
               product.product_type === "poster" &&
-              product.attributes?.poster_options && (
-                <FrameDetails />
-              )}
+              product.attributes?.poster_options && <FrameDetails />}
           </Box>
         </Box>
 
@@ -617,7 +607,7 @@ const ProductDetail = () => {
             fontWeight="bold"
             gutterBottom
           >
-            Produkte të ngjashme
+            {t("product.similarProducts")}
           </Typography>
           <ProductCarousel product_category={product.category} />
         </Box>
@@ -657,7 +647,6 @@ const ProductDetail = () => {
                 product.attributes.colors ||
                 product.attributes.dimensions);
 
-            // Success cases - product was added to cart (no selectable attributes, or poster/attributes with selection made)
             if (
               !product.attributes ||
               Object.keys(product.attributes).length === 0 ||
@@ -668,32 +657,18 @@ const ProductDetail = () => {
               return (
                 <Link
                   to="/cart"
-                  style={{
-                    textDecoration: "none",
-                    color: "black",
-                  }}
+                  style={{ textDecoration: "none", color: "black" }}
                 >
-                  Produkti u shtua në shportë
+                  {t("product.addedToCart")}
                 </Link>
               );
             }
 
-            // Error cases - validation failed
             if (isPoster && !posterSelections) {
-              return (
-                <Typography>
-                  Ju lutem konfigurojeni posterin para se ta shtoni në shportë
-                </Typography>
-              );
+              return <Typography>{t("product.configurePoster")}</Typography>;
             }
 
-            if (hasAttributes && !isPoster && !selectedAttribute) {
-              return (
-                <Typography>Ju lutem zgjidhni një nga opsionet</Typography>
-              );
-            }
-
-            return <Typography>Ju lutem zgjidhni një nga opsionet</Typography>;
+            return <Typography>{t("product.selectOption")}</Typography>;
           })()}
         </Alert>
       </Snackbar>

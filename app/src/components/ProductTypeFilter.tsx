@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
@@ -11,8 +12,6 @@ import Box from "@mui/material/Box";
 
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-const formatTypeLabel = (type: string) =>
-  type.charAt(0).toUpperCase() + type.slice(1);
 
 interface ProductTypeFilterProps {
   availableTypes: string[];
@@ -25,6 +24,8 @@ const ProductTypeFilter: React.FC<ProductTypeFilterProps> = ({
   selectedTypes,
   onTypeChange,
 }) => {
+  const { t } = useTranslation();
+
   const handleTypeToggle = (type: string) => {
     const newSelectedTypes = selectedTypes.includes(type)
       ? selectedTypes.filter((t) => t !== type)
@@ -42,7 +43,7 @@ const ProductTypeFilter: React.FC<ProductTypeFilterProps> = ({
     <Accordion defaultExpanded>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <Typography variant="h6" fontWeight="bold">
-          Lloji i Produktit
+          {t("products.productType")}
         </Typography>
       </AccordionSummary>
       <AccordionDetails>
@@ -65,7 +66,7 @@ const ProductTypeFilter: React.FC<ProductTypeFilterProps> = ({
                 }
                 label={
                   <Typography sx={{ fontSize: "0.9rem", color: "#555" }}>
-                    {formatTypeLabel(type)}
+                    {t(`categoryMap.${type.charAt(0).toUpperCase() + type.slice(1)}`, { defaultValue: type })}
                   </Typography>
                 }
               />

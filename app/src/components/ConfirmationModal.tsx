@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
@@ -38,6 +39,8 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
   severity,
   onClose,
 }) => {
+  const { t } = useTranslation();
+
   useEffect(() => {
     if (!open) return;
 
@@ -47,6 +50,7 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
 
     return () => clearTimeout(timer);
   }, [open, onClose]);
+
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogContent
@@ -70,17 +74,17 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
           </motion.div>
           <Typography variant="h5" gutterBottom>
             {severity === "success"
-              ? "Faleminderit për blerjen tuaj!"
-              : "Dicka shkoi keq"}
+              ? t("modal.successTitle")
+              : t("modal.errorTitle")}
           </Typography>
           <Typography variant="body1" gutterBottom>
             {severity === "success"
-              ? "Porosia u përfundua me sukses."
-              : "Ju lutem provojeni më vonë ose na kontaktoni."}
+              ? t("modal.successMessage")
+              : t("modal.errorMessage")}
           </Typography>
           <Box mt={4}>
             <Button variant="contained" color="primary" onClick={onClose}>
-              Shko te produktet
+              {t("modal.goToProducts")}
             </Button>
           </Box>
         </motion.div>

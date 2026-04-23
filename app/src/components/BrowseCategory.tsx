@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
@@ -7,66 +8,50 @@ import Button from "@mui/material/Button";
 
 interface Category {
   id: string;
-  name: string;
   path: string;
   color: string;
   image: string;
-  description: string;
 }
 
 const BrowseCategory = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const categories: Category[] = [
     {
       id: "f1",
-      name: "F1",
       path: "/f1",
       color: "#DC143C",
       image:
-        "https://vgtfcayksprxvzdcikrx.supabase.co/storage/v1/object/public/f1-images/Showcase/f1_category.jpg",
-      description:
-        "Zbuloni koleksionin tonë ekskluziv Formula 1. Postera të pistave, pilotëve dhe ekipeve, aksesore si makina miniaturë, çelësa, kapele dhe bluza.",
+        "https://vgtfcayksprxvzdcikrx.supabase.co/storage/v1/object/public/f1-images/Showcase/f1_browse_category.jpg",
     },
     {
-      id: "futboll",
-      name: "Futboll",
+      id: "football",
       path: "/futboll",
       color: "#000000",
       image:
-        "https://vgtfcayksprxvzdcikrx.supabase.co/storage/v1/object/public/f1-images/Showcase/football_category.jpg",
-      description:
-        "Eksploroni koleksionin tonë të posterave të futbollit. Postera të lojtarëve, ekipeve dhe momenteve ikonike nga klubet kryesore në mbarë botën.",
+        "https://vgtfcayksprxvzdcikrx.supabase.co/storage/v1/object/public/f1-images/Showcase/football_browse_category.jpg",
     },
     {
-      id: "basketboll",
-      name: "Basketboll",
+      id: "basketball",
       path: "/basketboll",
       color: "#FF6600",
       image:
         "https://vgtfcayksprxvzdcikrx.supabase.co/storage/v1/object/public/f1-images/Showcase/basketball_category.jpg",
-      description:
-        "Shfletoni koleksionin tonë të posterave të basketbollit. Postera të lojtarëve legjendar, ekipeve dhe momenteve historike nga NBA dhe basketbolli ndërkombëtar.",
     },
     {
-      id: "makina",
-      name: "Makina",
+      id: "cars",
       path: "/makina",
       color: "#1E90FF",
       image:
         "https://vgtfcayksprxvzdcikrx.supabase.co/storage/v1/object/public/f1-images/Showcase/cars_category.jpg",
-      description:
-        "Zbuloni koleksionin tonë të posterave të makinave. Postera të makinave klasike, supermakinave moderne dhe momenteve ikonike nga bota e automobilizmit.",
     },
     {
-      id: "filma",
-      name: "Filma",
+      id: "movies",
       path: "/filma",
       color: "#FFD700",
       image:
-        "https://vgtfcayksprxvzdcikrx.supabase.co/storage/v1/object/public/f1-images/Showcase/movies_category.jpg",
-      description:
-        "Eksploroni koleksionin tonë të posterave të filmave. Postera ikonike nga filmat klasik dhe bashkëkohor, serialet e njohur dhe personazhet e dashur.",
+        "https://vgtfcayksprxvzdcikrx.supabase.co/storage/v1/object/public/f1-images/Showcase/movie_browse_category.jpg",
     },
   ];
 
@@ -95,9 +80,12 @@ const BrowseCategory = () => {
             }}
           >
             <Box
+              component="button"
+              onClick={() => handleCategoryClick(category.path)}
+              aria-label={t(`categories.${category.id}.name`)}
               sx={{
                 flex: 1,
-                height: { xs: 250, sm: 300, md: 350 },
+                aspectRatio: "16 / 9",
                 backgroundColor: category.color,
                 borderRadius: 3,
                 display: "flex",
@@ -110,19 +98,24 @@ const BrowseCategory = () => {
                 overflow: "hidden",
                 boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
                 width: { xs: "100%", md: "auto" },
-                aspectRatio: "16 / 9",
-                opacity: 0.9,
+                opacity: { xs: 1, md: 0.97 },
                 transition: "all 0.3s ease",
-                "&:hover": {
-                  opacity: 1,
-                  boxShadow: "0 16px 48px rgba(0, 0, 0, 0.2)",
-                  transform: "scale(1.02)",
+                border: "none",
+                padding: 0,
+                cursor: "pointer",
+                "@media (hover: hover)": {
+                  "&:hover": {
+                    opacity: 1,
+                    boxShadow: "0 16px 48px rgba(0, 0, 0, 0.2)",
+                    transform: "translateY(-8px)",
+                  },
                 },
               }}
             >
               <img
                 src={category.image}
-                alt={category.name}
+                alt=""
+                aria-hidden="true"
                 style={{
                   width: "100%",
                   height: "100%",
@@ -153,7 +146,7 @@ const BrowseCategory = () => {
                   letterSpacing: "-0.02em",
                 }}
               >
-                {category.name}
+                {t(`categories.${category.id}.name`)}
               </Typography>
 
               <Typography
@@ -166,7 +159,7 @@ const BrowseCategory = () => {
                   fontFamily: "'Inter', 'Roboto', sans-serif",
                 }}
               >
-                {category.description}
+                {t(`categories.${category.id}.description`)}
               </Typography>
 
               <Box
@@ -200,7 +193,7 @@ const BrowseCategory = () => {
                     },
                   }}
                 >
-                  Shfleto Koleksionin
+                  {t("home.browseCollection")}
                 </Button>
               </Box>
             </Box>
