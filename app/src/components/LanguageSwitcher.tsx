@@ -17,7 +17,13 @@ const languages = [
   { code: "it", label: "Italiano", Flag: IT },
 ];
 
-const FLAG_STYLE: React.CSSProperties = { width: "20px", display: "block" };
+const FLAG_SX = {
+  width: 20,
+  lineHeight: 0,
+  display: "inline-flex",
+  alignItems: "center" as const,
+  "& > svg": { width: 20, display: "block" },
+};
 
 interface LanguageSwitcherProps {
   variant?: "navbar" | "footer";
@@ -63,7 +69,9 @@ const LanguageSwitcher = ({ variant = "navbar" }: LanguageSwitcherProps) => {
         }}
       >
         <Box sx={{ display: "flex", alignItems: "center", gap: 0.75 }}>
-          <CurrentFlag style={FLAG_STYLE} />
+          <Box sx={FLAG_SX}>
+            <CurrentFlag />
+          </Box>
           <span>{currentLanguage.code.toUpperCase()}</span>
         </Box>
       </Button>
@@ -81,7 +89,9 @@ const LanguageSwitcher = ({ variant = "navbar" }: LanguageSwitcherProps) => {
             selected={i18n.language === code}
             sx={{ gap: 1.5, fontSize: "0.875rem" }}
           >
-            <Flag style={FLAG_STYLE} />
+            <Box sx={FLAG_SX}>
+              <Flag />
+            </Box>
             {label}
           </MenuItem>
         ))}
