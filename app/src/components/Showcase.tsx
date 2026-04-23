@@ -81,7 +81,7 @@ const Showcase = () => {
       sx={{
         position: "relative",
         width: "100%",
-        height: 600,
+        height: { xs: 280, sm: 380, md: 500, lg: 600 },
         mb: 4,
         overflow: "hidden",
         cursor: "pointer",

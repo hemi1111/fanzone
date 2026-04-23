@@ -82,7 +82,7 @@ const BrowseCategory = () => {
             <Box
               sx={{
                 flex: 1,
-                height: { xs: 250, sm: 300, md: 350 },
+                aspectRatio: "16 / 9",
                 backgroundColor: category.color,
                 borderRadius: 3,
                 display: "flex",
@@ -95,7 +95,6 @@ const BrowseCategory = () => {
                 overflow: "hidden",
                 boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
                 width: { xs: "100%", md: "auto" },
-                aspectRatio: "16 / 9",
                 opacity: 0.9,
                 transition: "all 0.3s ease",
                 "&:hover": {
@@ -111,7 +110,7 @@ const BrowseCategory = () => {
                 style={{
                   width: "100%",
                   height: "100%",
-                  objectFit: "cover",
+                  objectFit: "contain",
                 }}
               />
             </Box>

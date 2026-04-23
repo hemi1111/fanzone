@@ -149,7 +149,21 @@
     "addedToCart": "Product added to cart",
     "configurePoster": "Please configure the poster before adding to cart",
     "selectOption": "Please select one of the options",
-    "discountLabel": "SALE"
+    "discountLabel": "SALE",
+    "sizeLabel": "Size",
+    "colorLabel": "Color",
+    "dimensionsLabel": "Dimensions",
+    "materialLabel": "Material",
+    "frameColorLabel": "Frame Color",
+    "materialFramed": "Framed",
+    "materialCanvas": "Canvas",
+    "qualityTitle": "Quality and Characteristics",
+    "qualityFeature1": "High quality printing with vibrant colors",
+    "qualityFeature2": "Good quality and durable materials",
+    "qualityFeature3": "Frames are lightweight and ready to hang",
+    "qualityFeature4": "Canvas is stretched and ready to hang",
+    "qualityFeature5": "Resistant to light and moisture",
+    "qualityFeature6": "All sizes come with included mounting systems"
   },
   "products": {
     "count": "{{current}} of {{total}} products",
@@ -192,6 +206,21 @@
   },
   "language": {
     "switcher": "Language"
+  },
+  "colorMap": {
+    "black": "Black",
+    "white": "White",
+    "red": "Red",
+    "blue": "Blue",
+    "green": "Green",
+    "yellow": "Yellow",
+    "orange": "Orange",
+    "purple": "Purple",
+    "pink": "Pink",
+    "grey": "Grey",
+    "gray": "Gray",
+    "silver": "Silver",
+    "gold": "Gold"
   },
   "categoryMap": {
     "Filma": "Movies",

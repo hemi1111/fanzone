@@ -40,7 +40,7 @@ import { CATEGORY_CONFIGS } from "../../types/CategoryConfig";
 const ProductDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const { addToCart }: any = useShop();
 
@@ -55,6 +55,13 @@ const ProductDetail = () => {
   const [posterSelections, setPosterSelections] =
     useState<PosterSelections | null>(null);
   const [quantity, setQuantity] = useState<number>(1);
+
+  const getLocalizedDescription = (p: typeof product) => {
+    if (!p) return "";
+    if (i18n.language === "en" && p.description_en) return p.description_en;
+    if (i18n.language === "it" && p.description_it) return p.description_it;
+    return p.description;
+  };
 
   const calculatePosterPrice = (
     basePrice: number,
@@ -419,7 +426,7 @@ const ProductDetail = () => {
 
               {/* Product Description */}
               <Typography variant="body1" paragraph sx={{ mb: 3 }}>
-                {product.description.split(".")[0]}
+                {getLocalizedDescription(product).split(".")[0]}
               </Typography>
 
               {/* Product Customization */}
@@ -570,9 +577,9 @@ const ProductDetail = () => {
           >
             {tabValue === 0 && (
               <Stack>
-                <strong>{product.description.split(".")[0]}</strong>
+                <strong>{getLocalizedDescription(product).split(".")[0]}</strong>
                 <br />
-                <ProductDescription description={product.description} />
+                <ProductDescription description={getLocalizedDescription(product)} />
               </Stack>
             )}
 

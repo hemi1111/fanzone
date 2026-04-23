@@ -149,7 +149,21 @@
     "addedToCart": "Prodotto aggiunto al carrello",
     "configurePoster": "Configura il poster prima di aggiungerlo al carrello",
     "selectOption": "Seleziona una delle opzioni",
-    "discountLabel": "SCONTO"
+    "discountLabel": "SCONTO",
+    "sizeLabel": "Dimensione",
+    "colorLabel": "Colore",
+    "dimensionsLabel": "Dimensioni",
+    "materialLabel": "Materiale",
+    "frameColorLabel": "Colore Cornice",
+    "materialFramed": "Con Cornice",
+    "materialCanvas": "Tela",
+    "qualityTitle": "Qualità e Caratteristiche",
+    "qualityFeature1": "Stampa di alta qualità con colori vivaci",
+    "qualityFeature2": "Materiali di buona qualità e duraturi",
+    "qualityFeature3": "Le cornici sono leggere e pronte per essere appese",
+    "qualityFeature4": "La tela è tesa e pronta per essere appesa",
+    "qualityFeature5": "Resistenti alla luce e all'umidità",
+    "qualityFeature6": "Tutte le dimensioni vengono fornite con sistemi di montaggio inclusi"
   },
   "products": {
     "count": "{{current}} di {{total}} prodotti",
@@ -192,6 +206,21 @@
   },
   "language": {
     "switcher": "Lingua"
+  },
+  "colorMap": {
+    "black": "Nera",
+    "white": "Bianca",
+    "red": "Rossa",
+    "blue": "Blu",
+    "green": "Verde",
+    "yellow": "Gialla",
+    "orange": "Arancione",
+    "purple": "Viola",
+    "pink": "Rosa",
+    "grey": "Grigio",
+    "gray": "Grigio",
+    "silver": "Argento",
+    "gold": "Oro"
   },
   "categoryMap": {
     "Filma": "Film",

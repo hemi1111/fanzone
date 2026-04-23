@@ -149,7 +149,21 @@
     "addedToCart": "Produkti u shtua në shportë",
     "configurePoster": "Ju lutem konfigurojeni posterin para se ta shtoni në shportë",
     "selectOption": "Ju lutem zgjidhni një nga opsionet",
-    "discountLabel": "ZBRITJE"
+    "discountLabel": "ZBRITJE",
+    "sizeLabel": "Madhësia",
+    "colorLabel": "Ngjyra",
+    "dimensionsLabel": "Përmasat",
+    "materialLabel": "Materiali",
+    "frameColorLabel": "Ngjyra e Kornizës",
+    "materialFramed": "Me Kornizë",
+    "materialCanvas": "Canvas",
+    "qualityTitle": "Cilësia dhe Karakteristikat",
+    "qualityFeature1": "Printim me cilësi të lartë dhe ngjyra vibrante",
+    "qualityFeature2": "Materiale të cilësisë së mirë dhe të qëndrueshme",
+    "qualityFeature3": "Kornizat janë të lehta dhe të gatshme për t'u varur",
+    "qualityFeature4": "Canvas është i tensionuar dhe i gatshëm për t'u varur",
+    "qualityFeature5": "Rezistente ndaj dritës dhe lagështisë",
+    "qualityFeature6": "Të gjitha madhësitë vijnë me sisteme montimi të përfshira"
   },
   "products": {
     "count": "{{current}} nga {{total}} produkte",
@@ -192,6 +206,21 @@
   },
   "language": {
     "switcher": "Gjuha"
+  },
+  "colorMap": {
+    "black": "E Zezë",
+    "white": "E Bardhë",
+    "red": "Kuqe",
+    "blue": "Blu",
+    "green": "Gjelbër",
+    "yellow": "Verdhë",
+    "orange": "Portokalli",
+    "purple": "Vjollcë",
+    "pink": "Rozë",
+    "grey": "Gri",
+    "gray": "Gri",
+    "silver": "Argjend",
+    "gold": "Ar"
   },
   "categoryMap": {
     "Filma": "Filma",

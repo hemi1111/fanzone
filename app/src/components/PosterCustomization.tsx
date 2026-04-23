@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
@@ -27,18 +28,25 @@ const PosterCustomization: React.FC<PosterCustomizationProps> = ({
   posterOptions,
   onSelectionChange,
 }) => {
+  const { t } = useTranslation();
+
   const [selections, setSelections] = useState<PosterSelections>({
     size: posterOptions.sizes[0] || "",
     frameColor: posterOptions.frame_colors[0] || "black",
     material: posterOptions.materials[0] || "",
   });
 
-  // Update parent component when selections change
   useEffect(() => {
     onSelectionChange(selections);
   }, [selections, onSelectionChange]);
 
-  // Event handlers are now handled inline with button onClick events
+  const getColorLabel = (color: string) =>
+    t(`colorMap.${color.toLowerCase()}`, { defaultValue: color });
+
+  const getMaterialLabel = (material: string) =>
+    material === "framed"
+      ? t("product.materialFramed")
+      : t("product.materialCanvas");
 
   return (
     <Box sx={{ mb: 3 }}>
@@ -49,7 +57,7 @@ const PosterCustomization: React.FC<PosterCustomizationProps> = ({
           fontWeight="bold"
           sx={{ mb: 1, fontSize: "0.875rem", letterSpacing: "0.5px" }}
         >
-          MADHËSIA: {selections.size.toUpperCase()}
+          {t("product.sizeLabel").toUpperCase()}: {selections.size.toUpperCase()}
         </Typography>
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
           {posterOptions.sizes.map((size) => (
@@ -84,6 +92,7 @@ const PosterCustomization: React.FC<PosterCustomizationProps> = ({
           ))}
         </Box>
       </Box>
+
       {/* Material Selection */}
       <Box sx={{ mb: 3 }}>
         <Typography
@@ -91,8 +100,8 @@ const PosterCustomization: React.FC<PosterCustomizationProps> = ({
           fontWeight="bold"
           sx={{ mb: 1, fontSize: "0.875rem", letterSpacing: "0.5px" }}
         >
-          MATERIALI:{" "}
-          {selections.material === "framed" ? "ME KORNIZË" : "CANVAS"}
+          {t("product.materialLabel").toUpperCase()}:{" "}
+          {getMaterialLabel(selections.material).toUpperCase()}
         </Typography>
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
           {posterOptions.materials.map((material) => (
@@ -102,7 +111,6 @@ const PosterCustomization: React.FC<PosterCustomizationProps> = ({
                 selections.material === material ? "contained" : "outlined"
               }
               onClick={() => {
-                // If selecting canvas, reset frame color to default
                 if (material === "canvas") {
                   setSelections((prev) => ({
                     ...prev,
@@ -138,7 +146,7 @@ const PosterCustomization: React.FC<PosterCustomizationProps> = ({
                 },
               }}
             >
-              {material === "framed" ? "Me Kornizë" : "Canvas"}
+              {getMaterialLabel(material)}
             </Button>
           ))}
         </Box>
@@ -152,8 +160,8 @@ const PosterCustomization: React.FC<PosterCustomizationProps> = ({
             fontWeight="bold"
             sx={{ mb: 1, fontSize: "0.875rem", letterSpacing: "0.5px" }}
           >
-            NGJYRA E KORNIZËS:{" "}
-            {selections.frameColor === "black" ? "E ZEZË" : "E BARDHË"}
+            {t("product.frameColorLabel").toUpperCase()}:{" "}
+            {getColorLabel(selections.frameColor).toUpperCase()}
           </Typography>
           <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
             {posterOptions.frame_colors.map((color) => (
@@ -184,7 +192,7 @@ const PosterCustomization: React.FC<PosterCustomizationProps> = ({
                   },
                 }}
               >
-                {color === "black" ? "E Zezë" : "E Bardhë"}
+                {getColorLabel(color)}
               </Button>
             ))}
           </Box>
