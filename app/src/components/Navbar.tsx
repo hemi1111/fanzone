@@ -84,7 +84,7 @@ const Navbar = () => {
 
   const totalItems = cartItems.reduce(
     (sum: any, item: any) => sum + item.quantity,
-    0
+    0,
   );
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -417,7 +417,6 @@ const Navbar = () => {
               </Box>
             </Box>
 
-
             {/* Cart */}
             <Box sx={{ flexGrow: 0, display: "flex", alignItems: "center" }}>
               <IconButton
@@ -430,15 +429,17 @@ const Navbar = () => {
                   "&:hover": { transform: "scale(1.1)" },
                 }}
               >
-                <Badge badgeContent={totalItems} color="primary">
+                <Badge badgeContent={totalItems} color="error">
                   <ShoppingCartIcon />
                 </Badge>
               </IconButton>
             </Box>
-                {/* Language Switcher */}
-                <Box sx={{ display: { xs: "none", md: "flex" }, alignItems: "center" }}>
-                  <LanguageSwitcher variant="navbar" />
-                </Box>
+            {/* Language Switcher */}
+            <Box
+              sx={{ display: { xs: "none", md: "flex" }, alignItems: "center" }}
+            >
+              <LanguageSwitcher variant="navbar" />
+            </Box>
           </Box>
         </Toolbar>
       </Container>

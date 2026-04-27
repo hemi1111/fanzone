@@ -49,7 +49,7 @@ const CategoryProductsContainer = ({
   const [priceRange, setPriceRange] = useState<any[]>([0, 5000]);
   const [priceInput, setPriceInput] = useState<any[]>([0, 5000]);
   const [selectedProductTypes, setSelectedProductTypes] = useState<string[]>(
-    []
+    [],
   );
   const [sortOption, setSortOption] = useState<string>("default");
   const [showDiscountedOnly, setShowDiscountedOnly] = useState<boolean>(false);
@@ -90,7 +90,7 @@ const CategoryProductsContainer = ({
       showDiscountedOnly,
       priceRange,
       sortOption,
-    ]
+    ],
   );
 
   const clearFilters = () => {
@@ -135,7 +135,10 @@ const CategoryProductsContainer = ({
         setPriceInput([0, 3000]);
       },
     },
-    { label: t("products.quickFilterOnSale"), action: () => setShowDiscountedOnly(true) },
+    {
+      label: t("products.quickFilterOnSale"),
+      action: () => setShowDiscountedOnly(true),
+    },
   ];
 
   const handlePriceChange = (newValue: any) => {
@@ -277,7 +280,9 @@ const CategoryProductsContainer = ({
       <Box sx={{ mb: 3 }}>
         <TextField
           fullWidth
-          placeholder={t("products.searchPlaceholder", { name: translateCategory(t, category) })}
+          placeholder={t("products.searchPlaceholder", {
+            name: translateCategory(t, category),
+          })}
           value={searchInput}
           onChange={(e) => handleCategorySearch(e.target.value)}
           InputProps={{
@@ -371,10 +376,15 @@ const CategoryProductsContainer = ({
             {selectedProductTypes.map((type) => (
               <Chip
                 key={type}
-                label={t("products.typeChip", { type: t(`categoryMap.${type.charAt(0).toUpperCase() + type.slice(1)}`, { defaultValue: type }) })}
+                label={t("products.typeChip", {
+                  type: t(
+                    `categoryMap.${type.charAt(0).toUpperCase() + type.slice(1)}`,
+                    { defaultValue: type },
+                  ),
+                })}
                 onDelete={() =>
                   setSelectedProductTypes((prev) =>
-                    prev.filter((t) => t !== type)
+                    prev.filter((t) => t !== type),
                   )
                 }
                 size="small"
@@ -383,7 +393,10 @@ const CategoryProductsContainer = ({
             ))}
             {(priceRange[0] > 0 || priceRange[1] < 5000) && (
               <Chip
-                label={t("products.priceChip", { min: priceRange[0], max: priceRange[1] })}
+                label={t("products.priceChip", {
+                  min: priceRange[0],
+                  max: priceRange[1],
+                })}
                 onDelete={() => {
                   setPriceRange([0, 5000]);
                   setPriceInput([0, 5000]);
@@ -420,7 +433,7 @@ const CategoryProductsContainer = ({
             <Box
               sx={{
                 position: "sticky",
-                top: 20,
+                top: 100,
                 backgroundColor: "#f9f9f9",
                 borderRadius: 2,
                 p: 2,
@@ -499,10 +512,18 @@ const CategoryProductsContainer = ({
                 }}
               >
                 <MenuItem value="default">{t("products.sortDefault")}</MenuItem>
-                <MenuItem value="price-low">{t("products.sortPriceLow")}</MenuItem>
-                <MenuItem value="price-high">{t("products.sortPriceHigh")}</MenuItem>
-                <MenuItem value="name-asc">{t("products.sortNameAsc")}</MenuItem>
-                <MenuItem value="name-desc">{t("products.sortNameDesc")}</MenuItem>
+                <MenuItem value="price-low">
+                  {t("products.sortPriceLow")}
+                </MenuItem>
+                <MenuItem value="price-high">
+                  {t("products.sortPriceHigh")}
+                </MenuItem>
+                <MenuItem value="name-asc">
+                  {t("products.sortNameAsc")}
+                </MenuItem>
+                <MenuItem value="name-desc">
+                  {t("products.sortNameDesc")}
+                </MenuItem>
               </TextField>
             </Box>
           )}
@@ -518,7 +539,9 @@ const CategoryProductsContainer = ({
               }}
             >
               <Typography variant="body1" color="text.secondary">
-                {t("products.categoryLabel", { name: translateCategory(t, category) })}
+                {t("products.categoryLabel", {
+                  name: translateCategory(t, category),
+                })}
               </Typography>
 
               <TextField
@@ -545,10 +568,18 @@ const CategoryProductsContainer = ({
                 }}
               >
                 <MenuItem value="default">{t("products.sortDefault")}</MenuItem>
-                <MenuItem value="price-low">{t("products.sortPriceLow")}</MenuItem>
-                <MenuItem value="price-high">{t("products.sortPriceHigh")}</MenuItem>
-                <MenuItem value="name-asc">{t("products.sortNameAsc")}</MenuItem>
-                <MenuItem value="name-desc">{t("products.sortNameDesc")}</MenuItem>
+                <MenuItem value="price-low">
+                  {t("products.sortPriceLow")}
+                </MenuItem>
+                <MenuItem value="price-high">
+                  {t("products.sortPriceHigh")}
+                </MenuItem>
+                <MenuItem value="name-asc">
+                  {t("products.sortNameAsc")}
+                </MenuItem>
+                <MenuItem value="name-desc">
+                  {t("products.sortNameDesc")}
+                </MenuItem>
               </TextField>
             </Box>
           )}
